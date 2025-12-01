@@ -28,7 +28,7 @@
 
     .page {
       width: 100%;
-      max-width: 980px;
+      max-width: 1100px;
       padding: 32px 16px 48px;
     }
 
@@ -59,11 +59,11 @@
 
     main {
       display: grid;
-      grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
       gap: 24px;
     }
 
-    @media (max-width: 768px) {
+    @media (max-width: 900px) {
       main {
         grid-template-columns: 1fr;
       }
@@ -89,91 +89,122 @@
       font-weight: 500;
     }
 
+    h3 {
+      margin: 18px 0 8px;
+      font-size: 15px;
+    }
+
     p {
-      margin: 0 0 12px;
+      margin: 0 0 10px;
       line-height: 1.5;
       font-size: 14px;
       color: #d1d5db;
     }
 
-    ul {
-      margin: 8px 0 12px 18px;
-      padding: 0;
-      font-size: 14px;
-    }
-
-    li {
+    label {
+      display: block;
+      font-size: 13px;
       margin-bottom: 4px;
-    }
-
-    .cta-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 16px;
-    }
-
-    .btn-primary {
-      padding: 10px 18px;
-      border-radius: 999px;
-      border: none;
-      cursor: pointer;
-      background: linear-gradient(135deg, #22c55e, #16a34a);
-      color: white;
-      font-size: 14px;
-    }
-
-    .btn-secondary {
-      padding: 10px 18px;
-      border-radius: 999px;
-      border: 1px solid #4b5563;
-      background: transparent;
       color: #e5e7eb;
-      font-size: 14px;
-      cursor: pointer;
     }
 
-    .badges {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 14px;
-      font-size: 11px;
-    }
-
-    .badge {
-      padding: 4px 10px;
-      border-radius: 999px;
+    input, select, textarea {
+      width: 100%;
+      padding: 7px 8px;
+      border-radius: 8px;
       border: 1px solid #374151;
+      background: #020617;
+      color: #f9fafb;
+      font-size: 13px;
+      margin-bottom: 10px;
+    }
+
+    input[type="file"] {
+      padding: 4px;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .step-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 10px 0 16px;
+      font-size: 11px;
       color: #9ca3af;
     }
 
-    .disclaimer {
-      margin-top: 10px;
-      font-size: 11px;
-      color: #6b7280;
-    }
-
-    /* Simulator column */
-
-    .sim-header {
+    .step-track {
+      flex: 1;
+      height: 4px;
+      border-radius: 999px;
+      background: #020617;
+      border: 1px solid #1f2937;
+      margin-right: 12px;
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 14px;
+      overflow: hidden;
     }
 
-    .score-pill {
-      display: inline-flex;
-      align-items: baseline;
+    .step-segment {
+      flex: 1;
+      background: #111827;
+      transition: background 0.15s ease-out;
+    }
+
+    .step-segment.active {
+      background: linear-gradient(90deg, #22c55e, #16a34a);
+    }
+
+    .step-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 10px;
+      color: #9ca3af;
       gap: 4px;
+    }
+
+    .step-labels span {
+      flex: 1;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    /* Right panel – score + voucher */
+
+    .score-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 10px;
+    }
+
+    .score-main {
       font-size: 13px;
       color: #9ca3af;
     }
 
-    .score-pill strong {
-      font-size: 18px;
+    .score-main span {
+      display: block;
+      font-size: 26px;
+      font-weight: 600;
       color: #f9fafb;
+    }
+
+    .voucher-box {
+      padding: 8px 12px;
+      border-radius: 12px;
+      border: 1px solid #374151;
+      background: rgba(15,23,42,0.7);
+      font-size: 12px;
+    }
+
+    .voucher-box strong {
+      font-size: 18px;
+      color: #22c55e;
     }
 
     .score-bar-outer {
@@ -197,37 +228,36 @@
     .score-caption {
       font-size: 11px;
       color: #9ca3af;
+      margin-bottom: 12px;
     }
 
-    .docs-list {
-      margin-top: 14px;
-      padding: 10px 12px;
-      border-radius: 12px;
-      background: rgba(15,23,42,0.6);
-      border: 1px dashed #374151;
-      max-height: 260px;
-      overflow-y: auto;
+    .recommendations h3 {
+      margin-top: 10px;
+      font-size: 14px;
     }
 
-    .docs-list label {
-      display: flex;
-      align-items: center;
-      gap: 8px;
+    .recommendations ul {
+      margin: 6px 0 8px 16px;
+      padding: 0;
       font-size: 13px;
-      margin-bottom: 6px;
-      cursor: pointer;
     }
 
-    .docs-list input[type="checkbox"] {
-      accent-color: #22c55e;
-      width: 14px;
-      height: 14px;
-    }
-
-    .sim-footnote {
+    .disclaimer {
       margin-top: 10px;
       font-size: 11px;
       color: #6b7280;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      border: 1px solid #374151;
+      color: #9ca3af;
+      margin-top: 4px;
     }
   </style>
 </head>
@@ -239,158 +269,311 @@
         WillIGetMyVisa<span>.com</span>
       </div>
       <div class="pill">
-        Private alpha · Document-based visa probability prototype
+        Private prototype · Document-based visa readiness score
       </div>
     </header>
 
     <main>
-      <!-- LEFT: Explanation & value proposition -->
+      <!-- LEFT: Single long form -->
       <section class="card">
-        <h1>Will I Get My Visa?</h1>
-        <h2>Check your document readiness and get a simple probability score.</h2>
+        <h1>Tell us about your trip</h1>
+        <h2>As you add more details, your estimated success probability and voucher value increase.</h2>
 
-        <p>
-          <strong>WillIGetMyVisa.com</strong> is building a data-driven way to estimate how strong
-          your visa application looks based on the documents you can provide.
-        </p>
-
-        <p>
-          In the future, you will be able to:
-        </p>
-        <ul>
-          <li>Upload your documents securely (passport, visas, proofs, bookings)</li>
-          <li>See how each document improves your probability score</li>
-          <li>Understand what is missing before you apply</li>
-          <li>Earn rewards for sharing anonymised visa outcome data</li>
-        </ul>
-
-        <p>
-          This page is a <strong>prototype</strong> to explain the concept. It does not make any real
-          immigration decisions today, but shows how a document-based score could work.
-        </p>
-
-        <div class="cta-row">
-          <button class="btn-primary">Try the sample score simulator</button>
-          <button class="btn-secondary">Join waitlist (coming soon)</button>
+        <!-- Horizontal journey bar -->
+        <div class="step-bar">
+          <div class="step-track">
+            <div class="step-segment" id="step-start"></div>
+            <div class="step-segment" id="step-personal"></div>
+            <div class="step-segment" id="step-occupation"></div>
+            <div class="step-segment" id="step-travel"></div>
+            <div class="step-segment" id="step-visa"></div>
+          </div>
+          <span style="font-size:11px;">Journey progress</span>
+        </div>
+        <div class="step-labels">
+          <span>Start</span>
+          <span>Personal</span>
+          <span>Occupation</span>
+          <span>Travel history</span>
+          <span>Visa results</span>
         </div>
 
-        <div class="badges">
-          <span class="badge">No real documents collected in this demo</span>
-          <span class="badge">UAE-based founder</span>
-          <span class="badge">Privacy &amp; compliance first</span>
-        </div>
+        <form id="visa-form" onsubmit="return false;">
+          <!-- Trip purpose -->
+          <h3>1. Trip details</h3>
+          <p style="margin-bottom:6px;">Where are you travelling and what is the purpose of your trip?</p>
+          <div class="two-col">
+            <div>
+              <label for="destinationCountry">Destination country</label>
+              <input id="destinationCountry" type="text" placeholder="e.g., Schengen, UK, UAE" />
+            </div>
+            <div>
+              <label for="travelMonth">Tentative travel month / year</label>
+              <input id="travelMonth" type="text" placeholder="e.g., May 2026" />
+            </div>
+          </div>
+          <label for="travelPurpose">Purpose of visit</label>
+          <textarea id="travelPurpose" rows="2" placeholder="e.g., tourism, business meetings, visiting family"></textarea>
 
-        <p class="disclaimer">
-          Disclaimer: This is not immigration advice, not a guarantee of visa approval,
-          and not an insurance product. It is an experimental scoring concept based on
-          typical document strength.
-        </p>
+          <!-- Personal details -->
+          <h3>2. Personal details</h3>
+          <p style="margin-bottom:6px;">Please provide your personal details as per your latest passport.</p>
+          <div class="two-col">
+            <div>
+              <label for="fullName">Full name</label>
+              <input id="fullName" data-section="personal" type="text" />
+            </div>
+            <div>
+              <label for="age">Age</label>
+              <input id="age" data-section="personal" type="number" min="0" />
+            </div>
+          </div>
+          <div class="two-col">
+            <div>
+              <label for="nationality">Nationality</label>
+              <input id="nationality" data-section="personal" type="text" />
+            </div>
+            <div>
+              <label for="residency">Country of residency (if different)</label>
+              <input id="residency" data-section="personal" type="text" />
+            </div>
+          </div>
+          <div>
+            <label for="maritalStatus">Marital status</label>
+            <input id="maritalStatus" data-section="personal" type="text" placeholder="e.g., single, married" />
+          </div>
+
+          <!-- Occupation & financial -->
+          <h3>3. Occupation &amp; financial details</h3>
+          <div class="two-col">
+            <div>
+              <label for="occupation">Occupation</label>
+              <input id="occupation" data-section="occupation" type="text" placeholder="e.g., employee, self-employed" />
+            </div>
+            <div>
+              <label for="employmentType">Type</label>
+              <input id="employmentType" data-section="occupation" type="text" placeholder="e.g., full-time, freelance" />
+            </div>
+          </div>
+          <div class="two-col">
+            <div>
+              <label for="annualIncome">Approx. annual income</label>
+              <input id="annualIncome" data-section="occupation" type="number" min="0" />
+            </div>
+            <div>
+              <label for="incomeCurrency">Income currency</label>
+              <input id="incomeCurrency" data-section="occupation" type="text" placeholder="e.g., INR, AED" />
+            </div>
+          </div>
+
+          <!-- Travel history -->
+          <h3>4. Travel history</h3>
+          <p style="margin-bottom:6px;">Tell us where you have travelled in the past 5–10 years.</p>
+          <div class="two-col">
+            <div>
+              <label for="travelCountry1">Country visited</label>
+              <input id="travelCountry1" data-section="travel" type="text" placeholder="e.g., Thailand" />
+            </div>
+            <div>
+              <label for="travelStart1">Approx. travel period</label>
+              <input id="travelStart1" data-section="travel" type="text" placeholder="e.g., Jan 2023" />
+            </div>
+          </div>
+          <small style="font-size:11px; color:#9ca3af;">
+            (In a future version you will be able to upload boarding passes and stamps – this is a simple prototype.)
+          </small>
+
+          <!-- Visa results -->
+          <h3>5. Visa results (prototype)</h3>
+          <p style="margin-bottom:6px;">
+            In the real product, you would upload your visa approval / rejection documents.
+          </p>
+          <label for="visaOutcomeFile">Upload a sample visa outcome file (optional demo)</label>
+          <input id="visaOutcomeFile" data-section="visa" type="file" />
+
+          <p style="margin-top:10px; font-size:11px; color:#9ca3af;">
+            Note: This demo does not store your files on any server. It only checks that you selected a file to
+            simulate completion of this step.
+          </p>
+        </form>
       </section>
 
-      <!-- RIGHT: Simple interactive probability simulator -->
+      <!-- RIGHT: Dynamic score + voucher + guidance -->
       <section class="card">
-        <div class="sim-header">
-          <div>
-            <h2 style="margin-bottom:4px;">Sample document eligibility score</h2>
-            <p style="margin-bottom:0;">
-              Tick the documents you have and see how a future score could change.
-            </p>
+        <div class="score-header">
+          <div class="score-main">
+            Overall visa success probability
+            <span id="score-value">0%</span>
+            <div class="chip">
+              Simulated estimate based on sections completed
+            </div>
           </div>
-        </div>
-
-        <div class="score-pill">
-          Current simulated score:
-          <strong id="score-value">20%</strong>
+          <div class="voucher-box">
+            Potential voucher if you exit now:<br />
+            <strong id="voucher-value">₹0</strong>
+          </div>
         </div>
 
         <div class="score-bar-outer">
           <div class="score-bar-inner" id="score-bar"></div>
         </div>
         <div class="score-caption">
-          More complete and consistent documents typically mean a higher probability of approval.
+          As you share more details (personal, occupation, travel history, and visa results),
+          your estimated probability and voucher value increase.
         </div>
 
-        <div class="docs-list" id="docs-list">
-          <label>
-            <input type="checkbox" data-points="20" />
-            Valid passport with 6+ months remaining
-          </label>
-          <label>
-            <input type="checkbox" data-points="10" />
-            Confirmed return flight booking
-          </label>
-          <label>
-            <input type="checkbox" data-points="10" />
-            Hotel booking or invitation with address
-          </label>
-          <label>
-            <input type="checkbox" data-points="10" />
-            Recent bank statements / proof of funds
-          </label>
-          <label>
-            <input type="checkbox" data-points="8" />
-            Employment letter or proof of business
-          </label>
-          <label>
-            <input type="checkbox" data-points="8" />
-            Previous visas for any OECD / Schengen / GCC country
-          </label>
-          <label>
-            <input type="checkbox" data-points="6" />
-            Travel insurance covering the trip
-          </label>
-          <label>
-            <input type="checkbox" data-points="6" />
-            Invitation letter from host / sponsor
-          </label>
-          <label>
-            <input type="checkbox" data-points="4" />
-            Clear travel history with exit stamps
-          </label>
-          <label>
-            <input type="checkbox" data-points="4" />
-            Evidence of ties to home country (property, family, etc.)
-          </label>
+        <div class="recommendations">
+          <h3>What you can do next to strengthen your application</h3>
+          <ul id="recommendations-list">
+            <li>Start by filling in your personal details as per your latest passport.</li>
+            <li>Then add your occupation and financial details.</li>
+            <li>Share your travel history and, later, your actual visa outcomes.</li>
+          </ul>
         </div>
 
-        <p class="sim-footnote">
-          This sample score is for illustration only. A real engine would use anonymised historical
-          outcomes, country-specific rules, and more detailed document checks.
+        <p class="disclaimer">
+          This is not immigration advice and not a guarantee of visa approval. The score here is a
+          simple, illustrative prototype based only on how many sections you complete. In the real
+          product, anonymous historical data and document checks would be used.
         </p>
       </section>
     </main>
   </div>
 
   <script>
-    // Simple client-side simulator: base score + sum of document points, capped at 98%
-    const checkboxes = document.querySelectorAll('#docs-list input[type="checkbox"]');
+    // Configuration for each major step
+    const steps = [
+      {
+        id: 'start',
+        label: 'Start',
+        success: 0,
+        voucher: 0,
+        requiredSelectors: [] // base
+      },
+      {
+        id: 'personal',
+        label: 'Personal details',
+        success: 20,
+        voucher: 10,
+        requiredSelectors: ['#fullName', '#age', '#nationality']
+      },
+      {
+        id: 'occupation',
+        label: 'Occupation & financial',
+        success: 40,
+        voucher: 50,
+        requiredSelectors: ['#occupation', '#employmentType', '#annualIncome', '#incomeCurrency']
+      },
+      {
+        id: 'travel',
+        label: 'Travel history',
+        success: 70,
+        voucher: 200,
+        requiredSelectors: ['#travelCountry1', '#travelStart1']
+      },
+      {
+        id: 'visa',
+        label: 'Visa results',
+        success: 90,
+        voucher: 1000,
+        requiredSelectors: ['#visaOutcomeFile']
+      }
+    ];
+
     const scoreValueEl = document.getElementById('score-value');
     const scoreBarEl = document.getElementById('score-bar');
+    const voucherValueEl = document.getElementById('voucher-value');
+    const recommendationsListEl = document.getElementById('recommendations-list');
 
-    function updateScore() {
-      let base = 20; // base probability even with only passport
-      let extra = 0;
+    const stepSegmentEls = {
+      start: document.getElementById('step-start'),
+      personal: document.getElementById('step-personal'),
+      occupation: document.getElementById('step-occupation'),
+      travel: document.getElementById('step-travel'),
+      visa: document.getElementById('step-visa')
+    };
 
-      checkboxes.forEach(cb => {
-        if (cb.checked) {
-          const pts = Number(cb.getAttribute('data-points') || 0);
-          extra += pts;
+    function isFieldFilled(el) {
+      if (!el) return false;
+      if (el.type === 'file') {
+        return el.files && el.files.length > 0;
+      }
+      return el.value.trim() !== '';
+    }
+
+    function recomputeScore() {
+      let maxStepIndex = 0;
+
+      // Determine highest completed step
+      steps.forEach((step, index) => {
+        if (index === 0) return; // start is always available
+        const allFilled = step.requiredSelectors.every(sel =>
+          isFieldFilled(document.querySelector(sel))
+        );
+        step.completed = allFilled;
+        if (allFilled) {
+          maxStepIndex = index;
         }
       });
 
-      let total = base + extra;
-      if (total > 98) total = 98; // never show 100%
+      const current = steps[maxStepIndex];
 
-      scoreValueEl.textContent = total + '%';
-      scoreBarEl.style.width = total + '%';
+      // Update main score and voucher
+      scoreValueEl.textContent = current.success + '%';
+      scoreBarEl.style.width = current.success + '%';
+      voucherValueEl.textContent = '₹' + current.voucher.toLocaleString('en-IN');
+
+      // Colour the journey segments
+      steps.forEach((step, index) => {
+        const el = stepSegmentEls[step.id];
+        if (!el) return;
+        el.classList.toggle('active', index <= maxStepIndex);
+      });
+
+      // Build recommendations from remaining steps
+      const remaining = steps.slice(maxStepIndex + 1);
+      recommendationsListEl.innerHTML = '';
+
+      if (remaining.length === 0) {
+        const li = document.createElement('li');
+        li.textContent =
+          'You have completed all sections in this prototype. In a future version, we will provide a more detailed, data-driven explanation of your score and risk areas.';
+        recommendationsListEl.appendChild(li);
+      } else {
+        remaining.forEach(step => {
+          const li = document.createElement('li');
+          if (step.id === 'personal') {
+            li.textContent = 'Add or complete your personal details as per your latest passport.';
+          } else if (step.id === 'occupation') {
+            li.textContent =
+              'Share your occupation and approximate annual income so we can understand financial stability.';
+          } else if (step.id === 'travel') {
+            li.textContent =
+              'Add your travel history for the last few years – countries visited and approximate dates.';
+          } else if (step.id === 'visa') {
+            li.textContent =
+              'Upload your visa approval / rejection documents so the system can learn from real outcomes.';
+          } else {
+            li.textContent = 'Continue filling the remaining sections.';
+          }
+          recommendationsListEl.appendChild(li);
+        });
+      }
     }
 
-    checkboxes.forEach(cb => {
-      cb.addEventListener('change', updateScore);
+    // Attach listeners to all fields that affect completion
+    const allInputs = document.querySelectorAll(
+      '#visa-form input, #visa-form textarea, #visa-form select'
+    );
+    allInputs.forEach(el => {
+      el.addEventListener('input', recomputeScore);
+      if (el.type === 'file') {
+        el.addEventListener('change', recomputeScore);
+      }
     });
 
-    // initialise
-    updateScore();
+    // Initial calculation
+    recomputeScore();
   </script>
 </body>
 </html>
