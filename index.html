@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Will I Get My Visa?</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <style>
+    :root {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color-scheme: light dark;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background: #0f172a;
+      color: #e5e7eb;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+    }
+
+    .page {
+      width: 100%;
+      max-width: 980px;
+      padding: 32px 16px 48px;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+
+    .logo {
+      font-weight: 700;
+      font-size: 20px;
+      letter-spacing: 0.05em;
+    }
+
+    .logo span {
+      color: #38bdf8;
+    }
+
+    .pill {
+      font-size: 12px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid #1f2937;
+      background: rgba(15,23,42,0.8);
+    }
+
+    main {
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+      gap: 24px;
+    }
+
+    @media (max-width: 768px) {
+      main {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .card {
+      background: #020617;
+      border-radius: 16px;
+      border: 1px solid #1f2937;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
+      padding: 24px 24px 20px;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: 26px;
+    }
+
+    h2 {
+      margin: 0 0 12px;
+      font-size: 16px;
+      color: #9ca3af;
+      font-weight: 500;
+    }
+
+    p {
+      margin: 0 0 12px;
+      line-height: 1.5;
+      font-size: 14px;
+      color: #d1d5db;
+    }
+
+    ul {
+      margin: 8px 0 12px 18px;
+      padding: 0;
+      font-size: 14px;
+    }
+
+    li {
+      margin-bottom: 4px;
+    }
+
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .btn-primary {
+      padding: 10px 18px;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      color: white;
+      font-size: 14px;
+    }
+
+    .btn-secondary {
+      padding: 10px 18px;
+      border-radius: 999px;
+      border: 1px solid #4b5563;
+      background: transparent;
+      color: #e5e7eb;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 14px;
+      font-size: 11px;
+    }
+
+    .badge {
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid #374151;
+      color: #9ca3af;
+    }
+
+    .disclaimer {
+      margin-top: 10px;
+      font-size: 11px;
+      color: #6b7280;
+    }
+
+    /* Simulator column */
+
+    .sim-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+
+    .score-pill {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 4px;
+      font-size: 13px;
+      color: #9ca3af;
+    }
+
+    .score-pill strong {
+      font-size: 18px;
+      color: #f9fafb;
+    }
+
+    .score-bar-outer {
+      width: 100%;
+      height: 10px;
+      border-radius: 999px;
+      background: #020617;
+      border: 1px solid #1f2937;
+      margin: 10px 0 4px;
+      overflow: hidden;
+    }
+
+    .score-bar-inner {
+      height: 100%;
+      width: 0%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #f97316, #22c55e);
+      transition: width 0.18s ease-out;
+    }
+
+    .score-caption {
+      font-size: 11px;
+      color: #9ca3af;
+    }
+
+    .docs-list {
+      margin-top: 14px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: rgba(15,23,42,0.6);
+      border: 1px dashed #374151;
+      max-height: 260px;
+      overflow-y: auto;
+    }
+
+    .docs-list label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      margin-bottom: 6px;
+      cursor: pointer;
+    }
+
+    .docs-list input[type="checkbox"] {
+      accent-color: #22c55e;
+      width: 14px;
+      height: 14px;
+    }
+
+    .sim-footnote {
+      margin-top: 10px;
+      font-size: 11px;
+      color: #6b7280;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+    <header>
+      <div class="logo">
+        WillIGetMyVisa<span>.com</span>
+      </div>
+      <div class="pill">
+        Private alpha · Document-based visa probability prototype
+      </div>
+    </header>
+
+    <main>
+      <!-- LEFT: Explanation & value proposition -->
+      <section class="card">
+        <h1>Will I Get My Visa?</h1>
+        <h2>Check your document readiness and get a simple probability score.</h2>
+
+        <p>
+          <strong>WillIGetMyVisa.com</strong> is building a data-driven way to estimate how strong
+          your visa application looks based on the documents you can provide.
+        </p>
+
+        <p>
+          In the future, you will be able to:
+        </p>
+        <ul>
+          <li>Upload your documents securely (passport, visas, proofs, bookings)</li>
+          <li>See how each document improves your probability score</li>
+          <li>Understand what is missing before you apply</li>
+          <li>Earn rewards for sharing anonymised visa outcome data</li>
+        </ul>
+
+        <p>
+          This page is a <strong>prototype</strong> to explain the concept. It does not make any real
+          immigration decisions today, but shows how a document-based score could work.
+        </p>
+
+        <div class="cta-row">
+          <button class="btn-primary">Try the sample score simulator</button>
+          <button class="btn-secondary">Join waitlist (coming soon)</button>
+        </div>
+
+        <div class="badges">
+          <span class="badge">No real documents collected in this demo</span>
+          <span class="badge">UAE-based founder</span>
+          <span class="badge">Privacy &amp; compliance first</span>
+        </div>
+
+        <p class="disclaimer">
+          Disclaimer: This is not immigration advice, not a guarantee of visa approval,
+          and not an insurance product. It is an experimental scoring concept based on
+          typical document strength.
+        </p>
+      </section>
+
+      <!-- RIGHT: Simple interactive probability simulator -->
+      <section class="card">
+        <div class="sim-header">
+          <div>
+            <h2 style="margin-bottom:4px;">Sample document eligibility score</h2>
+            <p style="margin-bottom:0;">
+              Tick the documents you have and see how a future score could change.
+            </p>
+          </div>
+        </div>
+
+        <div class="score-pill">
+          Current simulated score:
+          <strong id="score-value">20%</strong>
+        </div>
+
+        <div class="score-bar-outer">
+          <div class="score-bar-inner" id="score-bar"></div>
+        </div>
+        <div class="score-caption">
+          More complete and consistent documents typically mean a higher probability of approval.
+        </div>
+
+        <div class="docs-list" id="docs-list">
+          <label>
+            <input type="checkbox" data-points="20" />
+            Valid passport with 6+ months remaining
+          </label>
+          <label>
+            <input type="checkbox" data-points="10" />
+            Confirmed return flight booking
+          </label>
+          <label>
+            <input type="checkbox" data-points="10" />
+            Hotel booking or invitation with address
+          </label>
+          <label>
+            <input type="checkbox" data-points="10" />
+            Recent bank statements / proof of funds
+          </label>
+          <label>
+            <input type="checkbox" data-points="8" />
+            Employment letter or proof of business
+          </label>
+          <label>
+            <input type="checkbox" data-points="8" />
+            Previous visas for any OECD / Schengen / GCC country
+          </label>
+          <label>
+            <input type="checkbox" data-points="6" />
+            Travel insurance covering the trip
+          </label>
+          <label>
+            <input type="checkbox" data-points="6" />
+            Invitation letter from host / sponsor
+          </label>
+          <label>
+            <input type="checkbox" data-points="4" />
+            Clear travel history with exit stamps
+          </label>
+          <label>
+            <input type="checkbox" data-points="4" />
+            Evidence of ties to home country (property, family, etc.)
+          </label>
+        </div>
+
+        <p class="sim-footnote">
+          This sample score is for illustration only. A real engine would use anonymised historical
+          outcomes, country-specific rules, and more detailed document checks.
+        </p>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    // Simple client-side simulator: base score + sum of document points, capped at 98%
+    const checkboxes = document.querySelectorAll('#docs-list input[type="checkbox"]');
+    const scoreValueEl = document.getElementById('score-value');
+    const scoreBarEl = document.getElementById('score-bar');
+
+    function updateScore() {
+      let base = 20; // base probability even with only passport
+      let extra = 0;
+
+      checkboxes.forEach(cb => {
+        if (cb.checked) {
+          const pts = Number(cb.getAttribute('data-points') || 0);
+          extra += pts;
+        }
+      });
+
+      let total = base + extra;
+      if (total > 98) total = 98; // never show 100%
+
+      scoreValueEl.textContent = total + '%';
+      scoreBarEl.style.width = total + '%';
+    }
+
+    checkboxes.forEach(cb => {
+      cb.addEventListener('change', updateScore);
+    });
+
+    // initialise
+    updateScore();
+  </script>
+</body>
+</html>
