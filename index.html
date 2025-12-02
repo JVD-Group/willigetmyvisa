@@ -229,12 +229,29 @@
       background: #f9fafb;
       font-size: 12px;
       color: #4b5563;
-      min-width: 170px;
+      min-width: 190px;
     }
 
     .voucher-box strong {
       font-size: 18px;
       color: #15803d;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .btn-voucher {
+      margin-top: 4px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: none;
+      background: #2563eb;
+      color: #ffffff;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    .btn-voucher:hover {
+      background: #1d4ed8;
     }
 
     .score-bar-outer {
@@ -328,6 +345,20 @@
 
     .btn-secondary:hover {
       background: #f3f4f6;
+    }
+
+    .btn-remove-row {
+      padding: 4px 8px;
+      border-radius: 999px;
+      border: 1px solid #fecaca;
+      background: #fef2f2;
+      color: #b91c1c;
+      font-size: 11px;
+      cursor: pointer;
+    }
+
+    .btn-remove-row:hover {
+      background: #fee2e2;
     }
   </style>
 </head>
@@ -491,14 +522,15 @@
           <!-- Travel history -->
           <h3>4. Travel history</h3>
           <p style="margin-bottom:6px;">Add countries you have visited in the last few years.</p>
-          <div class="hint">You can add multiple rows. At least one completed row strengthens your profile.</div>
+          <div class="hint">You can add or remove rows. At least one completed row strengthens your profile.</div>
 
           <table id="travel-table">
             <thead>
               <tr>
-                <th style="width:45%;">Country visited</th>
-                <th style="width:27%;">Start (MM/YY)</th>
-                <th style="width:28%;">End (MM/YY)</th>
+                <th style="width:40%;">Country visited</th>
+                <th style="width:22%;">Start (MM/YY)</th>
+                <th style="width:22%;">End (MM/YY)</th>
+                <th style="width:16%;">&nbsp;</th>
               </tr>
             </thead>
             <tbody id="travel-body">
@@ -512,7 +544,7 @@
           <!-- Visa results -->
           <h3>5. Visa results (prototype)</h3>
           <p style="margin-bottom:6px;">
-            In the real product, you would upload your visa approval / rejection documents.
+            Please upload the visa outcomes you receive (approvals or rejections).
           </p>
           <label for="visaOutcomeFile">Upload a sample visa outcome file (optional demo)</label>
           <input id="visaOutcomeFile" data-section="visa" type="file" />
@@ -535,8 +567,11 @@
             </div>
           </div>
           <div class="voucher-box">
-            Potential voucher if you exit now:<br />
+            <span>Potential voucher if you exit now</span>
             <strong id="voucher-value">₹0</strong>
+            <button type="button" class="btn-voucher" id="generate-voucher-btn">
+              Generate voucher
+            </button>
           </div>
         </div>
 
@@ -567,7 +602,7 @@
   </div>
 
   <script>
-    // --- Country & currency lists (can be extended) ---
+    // --- Country & currency lists ---
     const COUNTRIES = [
       "Afghanistan","Albania","Algeria","Andorra","Angola","Antigua and Barbuda","Argentina","Armenia",
       "Australia","Austria","Azerbaijan","Bahamas","Bahrain","Bangladesh","Barbados","Belarus","Belgium",
@@ -638,32 +673,27 @@
       "YER - Yemeni Rial","ZAR - South African Rand","ZMW - Zambian Kwacha","ZWL - Zimbabwean Dollar"
     ];
 
-    // --- Populate selects ---
-    function populateSelectOptions() {
-      const countrySelects = document.querySelectorAll('.country-select');
-      countrySelects.forEach(sel => {
-        // avoid duplicating if already populated
-        if (sel.dataset.populated === '1') return;
-        COUNTRIES.forEach(name => {
-          const opt = document.createElement('option');
-          opt.value = name;
-          opt.textContent = name;
-          sel.appendChild(opt);
-        });
-        sel.dataset.populated = '1';
+    // --- Helpers to populate selects ---
+    function populateCountrySelect(sel) {
+      if (!sel || sel.dataset.populated === '1') return;
+      COUNTRIES.forEach(name => {
+        const opt = document.createElement('option');
+        opt.value = name;
+        opt.textContent = name;
+        sel.appendChild(opt);
       });
+      sel.dataset.populated = '1';
+    }
 
-      const currencySelects = document.querySelectorAll('.currency-select');
-      currencySelects.forEach(sel => {
-        if (sel.dataset.populated === '1') return;
-        CURRENCIES.forEach(label => {
-          const opt = document.createElement('option');
-          opt.value = label;
-          opt.textContent = label;
-          sel.appendChild(opt);
-        });
-        sel.dataset.populated = '1';
+    function populateCurrencySelect(sel) {
+      if (!sel || sel.dataset.populated === '1') return;
+      CURRENCIES.forEach(label => {
+        const opt = document.createElement('option');
+        opt.value = label;
+        opt.textContent = label;
+        sel.appendChild(opt);
       });
+      sel.dataset.populated = '1';
     }
 
     // --- Month/Year formatter (MM/YY) ---
@@ -680,13 +710,14 @@
       input.addEventListener('input', handleMonthYearInput);
     }
 
-    // --- Travel history dynamic rows ---
+    // --- Travel history dynamic rows (with delete) ---
     function createTravelRow() {
       const tr = document.createElement('tr');
 
       const tdCountry = document.createElement('td');
       const tdStart = document.createElement('td');
       const tdEnd = document.createElement('td');
+      const tdRemove = document.createElement('td');
 
       const countrySelect = document.createElement('select');
       countrySelect.className = 'country-select travel-country';
@@ -694,6 +725,8 @@
       placeholderOpt.value = '';
       placeholderOpt.textContent = 'Select country';
       countrySelect.appendChild(placeholderOpt);
+
+      populateCountrySelect(countrySelect);
 
       const startInput = document.createElement('input');
       startInput.type = 'text';
@@ -705,22 +738,31 @@
       endInput.placeholder = 'MM/YY';
       endInput.className = 'mm-yy travel-end';
 
-      tdCountry.appendChild(countrySelect);
-      tdStart.appendChild(startInput);
-      tdEnd.appendChild(endInput);
-
-      tr.appendChild(tdCountry);
-      tr.appendChild(tdStart);
-      tr.appendChild(tdEnd);
-
-      // populate country options and attach listeners
-      populateSelectOptions();
       attachMonthYearFormatter(startInput);
       attachMonthYearFormatter(endInput);
 
       [countrySelect, startInput, endInput].forEach(el => {
         el.addEventListener('input', recomputeScore);
       });
+
+      const removeBtn = document.createElement('button');
+      removeBtn.type = 'button';
+      removeBtn.textContent = 'Remove';
+      removeBtn.className = 'btn-remove-row';
+      removeBtn.addEventListener('click', () => {
+        tr.remove();
+        recomputeScore();
+      });
+
+      tdCountry.appendChild(countrySelect);
+      tdStart.appendChild(startInput);
+      tdEnd.appendChild(endInput);
+      tdRemove.appendChild(removeBtn);
+
+      tr.appendChild(tdCountry);
+      tr.appendChild(tdStart);
+      tr.appendChild(tdEnd);
+      tr.appendChild(tdRemove);
 
       return tr;
     }
@@ -857,7 +899,9 @@
 
     // --- Initialisation ---
     document.addEventListener('DOMContentLoaded', () => {
-      populateSelectOptions();
+      // Populate top-level country & currency selects
+      document.querySelectorAll('.country-select').forEach(populateCountrySelect);
+      document.querySelectorAll('.currency-select').forEach(populateCurrencySelect);
 
       // Attach MM/YY formatter to existing inputs
       document.querySelectorAll('.mm-yy').forEach(attachMonthYearFormatter);
@@ -880,6 +924,14 @@
         } else {
           el.addEventListener('input', recomputeScore);
         }
+      });
+
+      // Voucher button (demo behaviour)
+      const voucherBtn = document.getElementById('generate-voucher-btn');
+      voucherBtn.addEventListener('click', () => {
+        alert(
+          'In the full product, this button would generate or reveal your voucher code based on completed sections.\n\nFor this prototype, it only simulates the action.'
+        );
       });
 
       recomputeScore();
