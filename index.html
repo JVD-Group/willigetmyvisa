@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Will I Get My Visa?</title>
+  <title>Visa Probability Checker</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <style>
     :root {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      color-scheme: light dark;
+      color-scheme: light;
     }
 
     * {
@@ -18,8 +18,8 @@
     body {
       margin: 0;
       padding: 0;
-      background: #0f172a;
-      color: #e5e7eb;
+      background: #f3f4f6;
+      color: #111827;
       display: flex;
       justify-content: center;
       align-items: flex-start;
@@ -28,7 +28,7 @@
 
     .page {
       width: 100%;
-      max-width: 1100px;
+      max-width: 1200px;
       padding: 32px 16px 48px;
     }
 
@@ -41,82 +41,96 @@
 
     .logo {
       font-weight: 700;
-      font-size: 20px;
-      letter-spacing: 0.05em;
+      font-size: 22px;
+      letter-spacing: 0.03em;
+      color: #111827;
     }
 
     .logo span {
-      color: #38bdf8;
+      color: #2563eb;
     }
 
     .pill {
       font-size: 12px;
       padding: 6px 10px;
       border-radius: 999px;
-      border: 1px solid #1f2937;
-      background: rgba(15,23,42,0.8);
+      border: 1px solid #d1d5db;
+      background: #f9fafb;
+      color: #4b5563;
     }
 
     main {
       display: grid;
-      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+      grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
       gap: 24px;
     }
 
-    @media (max-width: 900px) {
+    @media (max-width: 960px) {
       main {
         grid-template-columns: 1fr;
       }
     }
 
     .card {
-      background: #020617;
+      background: #ffffff;
       border-radius: 16px;
-      border: 1px solid #1f2937;
-      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
+      border: 1px solid #e5e7eb;
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.06);
       padding: 24px 24px 20px;
     }
 
     h1 {
       margin: 0 0 8px;
       font-size: 26px;
+      color: #111827;
     }
 
     h2 {
       margin: 0 0 12px;
-      font-size: 16px;
-      color: #9ca3af;
+      font-size: 15px;
+      color: #4b5563;
       font-weight: 500;
     }
 
     h3 {
       margin: 18px 0 8px;
       font-size: 15px;
+      color: #111827;
     }
 
     p {
       margin: 0 0 10px;
       line-height: 1.5;
       font-size: 14px;
-      color: #d1d5db;
+      color: #4b5563;
     }
 
     label {
       display: block;
       font-size: 13px;
       margin-bottom: 4px;
-      color: #e5e7eb;
+      color: #111827;
     }
 
-    input, select, textarea {
+    input,
+    select,
+    textarea {
       width: 100%;
       padding: 7px 8px;
       border-radius: 8px;
-      border: 1px solid #374151;
-      background: #020617;
-      color: #f9fafb;
+      border: 1px solid #d1d5db;
+      background: #ffffff;
+      color: #111827;
       font-size: 13px;
       margin-bottom: 10px;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      outline: none;
+      border-color: #2563eb;
+      box-shadow: 0 0 0 1px #2563eb20;
     }
 
     input[type="file"] {
@@ -129,21 +143,33 @@
       gap: 12px;
     }
 
+    @media (max-width: 640px) {
+      .two-col {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .hint {
+      font-size: 11px;
+      color: #6b7280;
+      margin-top: -2px;
+      margin-bottom: 8px;
+    }
+
     .step-bar {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin: 10px 0 16px;
       font-size: 11px;
-      color: #9ca3af;
+      color: #6b7280;
     }
 
     .step-track {
       flex: 1;
       height: 4px;
       border-radius: 999px;
-      background: #020617;
-      border: 1px solid #1f2937;
+      background: #e5e7eb;
       margin-right: 12px;
       display: flex;
       overflow: hidden;
@@ -151,20 +177,21 @@
 
     .step-segment {
       flex: 1;
-      background: #111827;
+      background: #e5e7eb;
       transition: background 0.15s ease-out;
     }
 
     .step-segment.active {
-      background: linear-gradient(90deg, #22c55e, #16a34a);
+      background: linear-gradient(90deg, #22c55e, #15803d);
     }
 
     .step-labels {
       display: flex;
       justify-content: space-between;
       font-size: 10px;
-      color: #9ca3af;
+      color: #6b7280;
       gap: 4px;
+      margin-bottom: 4px;
     }
 
     .step-labels span {
@@ -180,39 +207,41 @@
       justify-content: space-between;
       align-items: flex-start;
       margin-bottom: 10px;
+      gap: 12px;
     }
 
     .score-main {
       font-size: 13px;
-      color: #9ca3af;
+      color: #4b5563;
     }
 
     .score-main span {
       display: block;
-      font-size: 26px;
+      font-size: 28px;
       font-weight: 600;
-      color: #f9fafb;
+      color: #111827;
     }
 
     .voucher-box {
       padding: 8px 12px;
       border-radius: 12px;
-      border: 1px solid #374151;
-      background: rgba(15,23,42,0.7);
+      border: 1px solid #d1d5db;
+      background: #f9fafb;
       font-size: 12px;
+      color: #4b5563;
+      min-width: 170px;
     }
 
     .voucher-box strong {
       font-size: 18px;
-      color: #22c55e;
+      color: #15803d;
     }
 
     .score-bar-outer {
       width: 100%;
       height: 10px;
       border-radius: 999px;
-      background: #020617;
-      border: 1px solid #1f2937;
+      background: #e5e7eb;
       margin: 10px 0 4px;
       overflow: hidden;
     }
@@ -227,7 +256,7 @@
 
     .score-caption {
       font-size: 11px;
-      color: #9ca3af;
+      color: #6b7280;
       margin-bottom: 12px;
     }
 
@@ -240,12 +269,13 @@
       margin: 6px 0 8px 16px;
       padding: 0;
       font-size: 13px;
+      color: #4b5563;
     }
 
     .disclaimer {
       margin-top: 10px;
       font-size: 11px;
-      color: #6b7280;
+      color: #9ca3af;
     }
 
     .chip {
@@ -255,9 +285,49 @@
       font-size: 11px;
       padding: 4px 8px;
       border-radius: 999px;
-      border: 1px solid #374151;
-      color: #9ca3af;
+      border: 1px solid #d1d5db;
+      color: #6b7280;
       margin-top: 4px;
+      background: #f9fafb;
+    }
+
+    /* Travel history table */
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 6px;
+    }
+
+    thead {
+      background: #f9fafb;
+    }
+
+    th,
+    td {
+      border: 1px solid #e5e7eb;
+      padding: 6px;
+      font-size: 12px;
+      text-align: left;
+    }
+
+    th {
+      font-weight: 500;
+      color: #4b5563;
+    }
+
+    .btn-secondary {
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid #d1d5db;
+      background: #ffffff;
+      color: #111827;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    .btn-secondary:hover {
+      background: #f3f4f6;
     }
   </style>
 </head>
@@ -266,18 +336,18 @@
   <div class="page">
     <header>
       <div class="logo">
-        WillIGetMyVisa<span>.com</span>
+        Visa Probability <span>Checker</span>
       </div>
       <div class="pill">
-        Private prototype · Document-based visa readiness score
+        Prototype · Document-driven visa readiness & voucher concept
       </div>
     </header>
 
     <main>
       <!-- LEFT: Single long form -->
       <section class="card">
-        <h1>Tell us about your trip</h1>
-        <h2>As you add more details, your estimated success probability and voucher value increase.</h2>
+        <h1>Your trip profile</h1>
+        <h2>As you add more information, your estimated visa success probability and voucher value increase.</h2>
 
         <!-- Horizontal journey bar -->
         <div class="step-bar">
@@ -300,280 +370,4 @@
 
         <form id="visa-form" onsubmit="return false;">
           <!-- Trip purpose -->
-          <h3>1. Trip details</h3>
-          <p style="margin-bottom:6px;">Where are you travelling and what is the purpose of your trip?</p>
-          <div class="two-col">
-            <div>
-              <label for="destinationCountry">Destination country</label>
-              <input id="destinationCountry" type="text" placeholder="e.g., Schengen, UK, UAE" />
-            </div>
-            <div>
-              <label for="travelMonth">Tentative travel month / year</label>
-              <input id="travelMonth" type="text" placeholder="e.g., May 2026" />
-            </div>
-          </div>
-          <label for="travelPurpose">Purpose of visit</label>
-          <textarea id="travelPurpose" rows="2" placeholder="e.g., tourism, business meetings, visiting family"></textarea>
-
-          <!-- Personal details -->
-          <h3>2. Personal details</h3>
-          <p style="margin-bottom:6px;">Please provide your personal details as per your latest passport.</p>
-          <div class="two-col">
-            <div>
-              <label for="fullName">Full name</label>
-              <input id="fullName" data-section="personal" type="text" />
-            </div>
-            <div>
-              <label for="age">Age</label>
-              <input id="age" data-section="personal" type="number" min="0" />
-            </div>
-          </div>
-          <div class="two-col">
-            <div>
-              <label for="nationality">Nationality</label>
-              <input id="nationality" data-section="personal" type="text" />
-            </div>
-            <div>
-              <label for="residency">Country of residency (if different)</label>
-              <input id="residency" data-section="personal" type="text" />
-            </div>
-          </div>
-          <div>
-            <label for="maritalStatus">Marital status</label>
-            <input id="maritalStatus" data-section="personal" type="text" placeholder="e.g., single, married" />
-          </div>
-
-          <!-- Occupation & financial -->
-          <h3>3. Occupation &amp; financial details</h3>
-          <div class="two-col">
-            <div>
-              <label for="occupation">Occupation</label>
-              <input id="occupation" data-section="occupation" type="text" placeholder="e.g., employee, self-employed" />
-            </div>
-            <div>
-              <label for="employmentType">Type</label>
-              <input id="employmentType" data-section="occupation" type="text" placeholder="e.g., full-time, freelance" />
-            </div>
-          </div>
-          <div class="two-col">
-            <div>
-              <label for="annualIncome">Approx. annual income</label>
-              <input id="annualIncome" data-section="occupation" type="number" min="0" />
-            </div>
-            <div>
-              <label for="incomeCurrency">Income currency</label>
-              <input id="incomeCurrency" data-section="occupation" type="text" placeholder="e.g., INR, AED" />
-            </div>
-          </div>
-
-          <!-- Travel history -->
-          <h3>4. Travel history</h3>
-          <p style="margin-bottom:6px;">Tell us where you have travelled in the past 5–10 years.</p>
-          <div class="two-col">
-            <div>
-              <label for="travelCountry1">Country visited</label>
-              <input id="travelCountry1" data-section="travel" type="text" placeholder="e.g., Thailand" />
-            </div>
-            <div>
-              <label for="travelStart1">Approx. travel period</label>
-              <input id="travelStart1" data-section="travel" type="text" placeholder="e.g., Jan 2023" />
-            </div>
-          </div>
-          <small style="font-size:11px; color:#9ca3af;">
-            (In a future version you will be able to upload boarding passes and stamps – this is a simple prototype.)
-          </small>
-
-          <!-- Visa results -->
-          <h3>5. Visa results (prototype)</h3>
-          <p style="margin-bottom:6px;">
-            In the real product, you would upload your visa approval / rejection documents.
-          </p>
-          <label for="visaOutcomeFile">Upload a sample visa outcome file (optional demo)</label>
-          <input id="visaOutcomeFile" data-section="visa" type="file" />
-
-          <p style="margin-top:10px; font-size:11px; color:#9ca3af;">
-            Note: This demo does not store your files on any server. It only checks that you selected a file to
-            simulate completion of this step.
-          </p>
-        </form>
-      </section>
-
-      <!-- RIGHT: Dynamic score + voucher + guidance -->
-      <section class="card">
-        <div class="score-header">
-          <div class="score-main">
-            Overall visa success probability
-            <span id="score-value">0%</span>
-            <div class="chip">
-              Simulated estimate based on sections completed
-            </div>
-          </div>
-          <div class="voucher-box">
-            Potential voucher if you exit now:<br />
-            <strong id="voucher-value">₹0</strong>
-          </div>
-        </div>
-
-        <div class="score-bar-outer">
-          <div class="score-bar-inner" id="score-bar"></div>
-        </div>
-        <div class="score-caption">
-          As you share more details (personal, occupation, travel history, and visa results),
-          your estimated probability and voucher value increase.
-        </div>
-
-        <div class="recommendations">
-          <h3>What you can do next to strengthen your application</h3>
-          <ul id="recommendations-list">
-            <li>Start by filling in your personal details as per your latest passport.</li>
-            <li>Then add your occupation and financial details.</li>
-            <li>Share your travel history and, later, your actual visa outcomes.</li>
-          </ul>
-        </div>
-
-        <p class="disclaimer">
-          This is not immigration advice and not a guarantee of visa approval. The score here is a
-          simple, illustrative prototype based only on how many sections you complete. In the real
-          product, anonymous historical data and document checks would be used.
-        </p>
-      </section>
-    </main>
-  </div>
-
-  <script>
-    // Configuration for each major step
-    const steps = [
-      {
-        id: 'start',
-        label: 'Start',
-        success: 0,
-        voucher: 0,
-        requiredSelectors: [] // base
-      },
-      {
-        id: 'personal',
-        label: 'Personal details',
-        success: 20,
-        voucher: 10,
-        requiredSelectors: ['#fullName', '#age', '#nationality']
-      },
-      {
-        id: 'occupation',
-        label: 'Occupation & financial',
-        success: 40,
-        voucher: 50,
-        requiredSelectors: ['#occupation', '#employmentType', '#annualIncome', '#incomeCurrency']
-      },
-      {
-        id: 'travel',
-        label: 'Travel history',
-        success: 70,
-        voucher: 200,
-        requiredSelectors: ['#travelCountry1', '#travelStart1']
-      },
-      {
-        id: 'visa',
-        label: 'Visa results',
-        success: 90,
-        voucher: 1000,
-        requiredSelectors: ['#visaOutcomeFile']
-      }
-    ];
-
-    const scoreValueEl = document.getElementById('score-value');
-    const scoreBarEl = document.getElementById('score-bar');
-    const voucherValueEl = document.getElementById('voucher-value');
-    const recommendationsListEl = document.getElementById('recommendations-list');
-
-    const stepSegmentEls = {
-      start: document.getElementById('step-start'),
-      personal: document.getElementById('step-personal'),
-      occupation: document.getElementById('step-occupation'),
-      travel: document.getElementById('step-travel'),
-      visa: document.getElementById('step-visa')
-    };
-
-    function isFieldFilled(el) {
-      if (!el) return false;
-      if (el.type === 'file') {
-        return el.files && el.files.length > 0;
-      }
-      return el.value.trim() !== '';
-    }
-
-    function recomputeScore() {
-      let maxStepIndex = 0;
-
-      // Determine highest completed step
-      steps.forEach((step, index) => {
-        if (index === 0) return; // start is always available
-        const allFilled = step.requiredSelectors.every(sel =>
-          isFieldFilled(document.querySelector(sel))
-        );
-        step.completed = allFilled;
-        if (allFilled) {
-          maxStepIndex = index;
-        }
-      });
-
-      const current = steps[maxStepIndex];
-
-      // Update main score and voucher
-      scoreValueEl.textContent = current.success + '%';
-      scoreBarEl.style.width = current.success + '%';
-      voucherValueEl.textContent = '₹' + current.voucher.toLocaleString('en-IN');
-
-      // Colour the journey segments
-      steps.forEach((step, index) => {
-        const el = stepSegmentEls[step.id];
-        if (!el) return;
-        el.classList.toggle('active', index <= maxStepIndex);
-      });
-
-      // Build recommendations from remaining steps
-      const remaining = steps.slice(maxStepIndex + 1);
-      recommendationsListEl.innerHTML = '';
-
-      if (remaining.length === 0) {
-        const li = document.createElement('li');
-        li.textContent =
-          'You have completed all sections in this prototype. In a future version, we will provide a more detailed, data-driven explanation of your score and risk areas.';
-        recommendationsListEl.appendChild(li);
-      } else {
-        remaining.forEach(step => {
-          const li = document.createElement('li');
-          if (step.id === 'personal') {
-            li.textContent = 'Add or complete your personal details as per your latest passport.';
-          } else if (step.id === 'occupation') {
-            li.textContent =
-              'Share your occupation and approximate annual income so we can understand financial stability.';
-          } else if (step.id === 'travel') {
-            li.textContent =
-              'Add your travel history for the last few years – countries visited and approximate dates.';
-          } else if (step.id === 'visa') {
-            li.textContent =
-              'Upload your visa approval / rejection documents so the system can learn from real outcomes.';
-          } else {
-            li.textContent = 'Continue filling the remaining sections.';
-          }
-          recommendationsListEl.appendChild(li);
-        });
-      }
-    }
-
-    // Attach listeners to all fields that affect completion
-    const allInputs = document.querySelectorAll(
-      '#visa-form input, #visa-form textarea, #visa-form select'
-    );
-    allInputs.forEach(el => {
-      el.addEventListener('input', recomputeScore);
-      if (el.type === 'file') {
-        el.addEventListener('change', recomputeScore);
-      }
-    });
-
-    // Initial calculation
-    recomputeScore();
-  </script>
-</body>
-</html>
+          <h3>1. Trip
