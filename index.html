@@ -178,6 +178,13 @@
             padding: 4px;
         }
 
+        /* Styling for the custom searchable dropdown */
+        input[list] {
+             /* Resetting the default arrow often seen in select/datalist */
+            appearance: none;
+            -webkit-appearance: none;
+        }
+
         .input-error {
             border-color: #dc2626 !important;
             background: #fef2f2;
@@ -455,6 +462,9 @@
 </head>
 
 <body>
+    <datalist id="country-list"></datalist>
+    <datalist id="currency-list"></datalist>
+
     <div class="page">
         <header>
             <div class="header-top">
@@ -502,29 +512,29 @@
                     <div class="two-col">
                         <div>
                             <label for="destinationCountry">Destination country</label>
-                            <select id="destinationCountry" required>
-                                <option value="">Select country</option>
-                            </select>
+                            <input type="text" id="destinationCountry" list="country-list" placeholder="Start typing country name..." required />
                         </div>
                         <div>
                             <label for="tripPurpose">Purpose of trip</label>
-                            <select id="tripPurpose" required>
+                            <select id="tripPurpose" required onchange="updateScoreAndProgress()">
                                 <option value="">Select purpose</option>
                                 <option value="tourism">Tourism</option>
                                 <option value="business">Business</option>
                                 <option value="study">Study</option>
+                                <option value="transit">Transit</option>
+                                <option value="visit">Visiting Family/Friends</option>
                             </select>
                         </div>
                     </div>
                     <div class="two-col">
                         <div>
-                            <label for="tripStart">Trip Start Date</label>
-                            <input type="date" id="tripStart" onchange="validateTripDates()" required />
+                            <label for="tripStart">Trip Start Date (MM/YY)</label>
+                            <input type="text" id="tripStart" oninput="formatDateMMYY(this); validateTripDates()" maxlength="5" placeholder="MM/YY" required />
                             <div id="tripStartError" class="error-text" style="display:none;"></div>
                         </div>
                         <div>
-                            <label for="tripEnd">Trip End Date</label>
-                            <input type="date" id="tripEnd" onchange="validateTripDates()" required />
+                            <label for="tripEnd">Trip End Date (MM/YY)</label>
+                            <input type="text" id="tripEnd" oninput="formatDateMMYY(this); validateTripDates()" maxlength="5" placeholder="MM/YY" required />
                             <div id="tripEndError" class="error-text" style="display:none;"></div>
                         </div>
                     </div>
@@ -542,20 +552,30 @@
                     </div>
                     <div class="two-col">
                         <div>
-                            <label for="nationality">Nationality</label>
-                            <select id="nationality" onchange="updateScoreAndProgress();" required>
-                                <option value="">Select nationality</option>
-                            </select>
+                            <label for="nationality">Nationality (Current Passport)</label>
+                            <input type="text" id="nationality" list="country-list" placeholder="Start typing nationality..." onchange="updateScoreAndProgress();" required />
                         </div>
                         <div>
                             <label for="maritalStatus">Marital Status</label>
-                            <select id="maritalStatus" required>
+                            <select id="maritalStatus" required onchange="updateScoreAndProgress()">
                                 <option value="">Select status</option>
                                 <option value="single">Single</option>
                                 <option value="married">Married</option>
                                 <option value="divorced">Divorced</option>
+                                <option value="widowed">Widowed</option>
                             </select>
                         </div>
+                    </div>
+                    <div>
+                        <label for="passportType">Type of Passport</label>
+                        <select id="passportType" required onchange="updateScoreAndProgress()">
+                            <option value="">Select type</option>
+                            <option value="ordinary">Ordinary</option>
+                            <option value="diplomatic">Diplomatic</option>
+                            <option value="official">Official/Special</option>
+                            <option value="service">Service</option>
+                            <option value="other">Other/Refugee</option>
+                        </select>
                     </div>
 
                     <div class="upload-section">
@@ -569,7 +589,7 @@
                     <div class="two-col">
                         <div>
                             <label for="occupationStatus">Employment Status</label>
-                            <select id="occupationStatus" required>
+                            <select id="occupationStatus" required onchange="updateScoreAndProgress()">
                                 <option value="">Select status</option>
                                 <option value="employed">Employed</option>
                                 <option value="self-employed">Self-employed</option>
@@ -585,10 +605,10 @@
                     </div>
                     <div>
                         <label for="incomeCurrency">Income Currency</label>
-                        <select id="incomeCurrency" required>
-                            <option value="">Select currency</option>
-                        </select>
+                        <input type="text" id="incomeCurrency" list="currency-list" placeholder="Start typing currency name..." required />
                     </div>
+
+
                     <h3 id="travel-history-section">4. Travel history <span class="chip" id="travel-doc-status">Doc Required</span></h3>
                     <p class="hint">List all trips abroad in the last 10 years, including destination country, and start/end dates.</p>
 
@@ -597,16 +617,16 @@
                             <thead>
                                 <tr>
                                     <th>Country</th>
-                                    <th>Start Date</th>
-                                    <th>End Date</th>
+                                    <th>Start Date (MM/YY)</th>
+                                    <th>End Date (MM/YY)</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody id="travelHistoryTableBody">
                                 <tr data-removable="false">
-                                    <td><select class="travel-country" required><option value="">Select</option></select></td>
-                                    <td><input type="month" class="travel-start-date" onchange="validateTravelHistoryDates()" required></td>
-                                    <td><input type="month" class="travel-end-date" onchange="validateTravelHistoryDates()" required></td>
+                                    <td><input type="text" class="travel-country" list="country-list" placeholder="Country" required /></td>
+                                    <td><input type="text" class="travel-start-date" oninput="formatDateMMYY(this); validateTravelHistoryDates()" maxlength="5" placeholder="MM/YY" required></td>
+                                    <td><input type="text" class="travel-end-date" oninput="formatDateMMYY(this); validateTravelHistoryDates()" maxlength="5" placeholder="MM/YY" required></td>
                                     <td><button type="button" class="btn-remove-row" disabled>Initial</button></td>
                                 </tr>
                             </tbody>
@@ -627,10 +647,10 @@
                     <div style="margin-bottom: 12px;">
                         <label>Did you receive a visa?</label>
                         <label style="display:inline-block; margin-right: 15px;">
-                            <input type="radio" name="visaOutcome" value="yes" required> Yes
+                            <input type="radio" name="visaOutcome" value="yes" required onchange="updateScoreAndProgress()"> Yes
                         </label>
                         <label style="display:inline-block;">
-                            <input type="radio" name="visaOutcome" value="no"> No
+                            <input type="radio" name="visaOutcome" value="no" onchange="updateScoreAndProgress()"> No
                         </label>
                     </div>
 
@@ -678,7 +698,7 @@
                 <div class="recommendations">
                     <h3>Profile Recommendations</h3>
                     <ul id="recommendation-list">
-                        <li>Start by completing the **Personal Details** section.</li>
+                        <li>Start by completing the **Trip Details** section.</li>
                     </ul>
                 </div>
 
@@ -692,19 +712,41 @@
     <script>
         // --- 1. PROTOTYPE DATA AND CONSTANTS ---
 
-        // Truncated list for prototype purposes
-        const COUNTRIES = {
-            "USA": "United States",
-            "IND": "India",
-            "ARE": "United Arab Emirates",
-            "JPN": "Japan",
-            "OTH": "Other Country"
-        };
-        const CURRENCIES = {
-            "INR": "Indian Rupee (₹)",
-            "AED": "UAE Dirham (AED)",
-            "USD": "US Dollar ($)"
-        };
+        // Full country list (4, 7)
+        const FULL_COUNTRIES = [
+            "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda", "Argentina", "Armenia", "Australia", "Austria",
+            "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bhutan",
+            "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Cabo Verde", "Cambodia",
+            "Cameroon", "Canada", "Central African Republic", "Chad", "Chile", "China", "Colombia", "Comoros", "Congo (Congo-Brazzaville)", "Costa Rica",
+            "Croatia", "Cuba", "Cyprus", "Czechia (Czech Republic)", "Democratic Republic of the Congo", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "Ecuador",
+            "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Eswatini (fmr. Swaziland)", "Ethiopia", "Fiji", "Finland", "France",
+            "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Grenada", "Guatemala", "Guinea", "Guinea-Bissau",
+            "Guyana", "Haiti", "Holy See", "Honduras", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq",
+            "Ireland", "Israel", "Italy", "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Kuwait",
+            "Kyrgyzstan", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg",
+            "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Mauritania", "Mauritius", "Mexico",
+            "Micronesia", "Moldova", "Monaco", "Mongolia", "Montenegro", "Morocco", "Mozambique", "Myanmar (formerly Burma)", "Namibia", "Nauru",
+            "Nepal", "Netherlands", "New Zealand", "Nicaragua", "Niger", "Nigeria", "North Korea", "North Macedonia (formerly Macedonia)", "Norway", "Oman",
+            "Pakistan", "Palau", "Palestine State", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal",
+            "Qatar", "Romania", "Russia", "Rwanda", "Saint Kitts and Nevis", "Saint Lucia", "Saint Vincent and the Grenadines", "Samoa", "San Marino", "Sao Tome and Principe",
+            "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia",
+            "South Africa", "South Korea", "South Sudan", "Spain", "Sri Lanka", "Sudan", "Suriname", "Sweden", "Switzerland", "Syria",
+            "Tajikistan", "Tanzania", "Thailand", "Timor-Leste", "Togo", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan",
+            "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States of America", "Uruguay", "Uzbekistan", "Vanuatu", "Venezuela",
+            "Vietnam", "Yemen", "Zambia", "Zimbabwe"
+        ];
+        
+        // Full currency list (6)
+        const FULL_CURRENCIES = [
+            "USD - United States Dollar", "EUR - Euro", "JPY - Japanese Yen", "GBP - British Pound Sterling", "AUD - Australian Dollar",
+            "CAD - Canadian Dollar", "CHF - Swiss Franc", "CNY - Chinese Yuan", "SEK - Swedish Krona", "NZD - New Zealand Dollar",
+            "MXN - Mexican Peso", "SGD - Singapore Dollar", "HKD - Hong Kong Dollar", "NOK - Norwegian Krone", "KRW - South Korean Won",
+            "TRY - Turkish Lira", "RUB - Russian Ruble", "INR - Indian Rupee", "BRL - Brazilian Real", "ZAR - South African Rand",
+            "PHP - Philippine Peso", "CZK - Czech Koruna", "PLN - Polish Złoty", "HUF - Hungarian Forint", "ILS - Israeli New Shekel",
+            "CLP - Chilean Peso", "AED - UAE Dirham", "SAR - Saudi Riyal", "DKK - Danish Krone", "MYR - Malaysian Ringgit",
+            "THB - Thai Baht", "IDR - Indonesian Rupiah", "PKR - Pakistani Rupee", "EGP - Egyptian Pound", "QAR - Qatari Riyal",
+            "VND - Vietnamese Đồng", "COP - Colombian Peso", "NGN - Nigerian Naira", "ARS - Argentine Peso", "Other Currency"
+        ];
 
         const STAGES = {
             start: { score: 0, voucher: 0, button: null, requiredDoc: null, docStatus: false, isComplete: true, label: "Start" },
@@ -717,46 +759,84 @@
         // --- 2. INITIALIZATION FUNCTIONS ---
 
         function populateDropdowns() {
-            const countrySelects = document.querySelectorAll('.country-select, .travel-country');
-            const currencySelect = document.getElementById('incomeCurrency');
+            // 4, 6. Populate Datalists for Searchable Fields
+            const countryDatalist = document.getElementById('country-list');
+            const currencyDatalist = document.getElementById('currency-list');
 
-            for (const key in COUNTRIES) {
+            // Populate Countries
+            FULL_COUNTRIES.forEach(country => {
                 const option = document.createElement('option');
-                option.value = key;
-                option.textContent = COUNTRIES[key];
-                countrySelects.forEach(select => select.appendChild(option.cloneNode(true)));
-            }
-            
-            for (const key in CURRENCIES) {
+                option.value = country;
+                countryDatalist.appendChild(option);
+            });
+
+            // Populate Currencies
+            FULL_CURRENCIES.forEach(currency => {
                 const option = document.createElement('option');
-                option.value = key;
-                option.textContent = CURRENCIES[key];
-                currencySelect.appendChild(option);
-            }
+                option.value = currency;
+                currencyDatalist.appendChild(option);
+            });
         }
 
-        // --- 3. DYNAMIC ELEMENTS & VOUCHER LOGIC ---
+        // --- 3. MM/YY FORMATTING AND PARSING (1, 2) ---
+
+        /**
+         * 1, 2. Auto-formats input to MM/YY similar to a credit card expiry date.
+         */
+        function formatDateMMYY(input) {
+            let value = input.value.replace(/\D/g, ''); // Remove all non-digits
+            
+            if (value.length > 2) {
+                value = value.substring(0, 2) + '/' + value.substring(2);
+            }
+            
+            if (value.length > 5) {
+                value = value.substring(0, 5);
+            }
+
+            // Cap month at 12
+            if (value.length === 2 && parseInt(value) > 12) {
+                value = '12';
+            }
+            
+            input.value = value;
+        }
+
+        /**
+         * Parses MM/YY string into a Date object (approx. 1st of the month).
+         */
+        function parseMMYY(dateString) {
+            const parts = dateString.split('/');
+            if (parts.length === 2 && parts[0].length === 2 && parts[1].length === 2) {
+                const month = parseInt(parts[0], 10);
+                const year = parseInt(parts[1], 10) + 2000; // Assume 21st century (e.g., 25 -> 2025)
+
+                if (month >= 1 && month <= 12) {
+                    return new Date(year, month - 1, 1); // Month is 0-indexed in JS Date
+                }
+            }
+            return null;
+        }
+
+        // --- 4. DYNAMIC ELEMENTS & VOUCHER LOGIC ---
 
         function getVoucherCurrencySymbol() {
-            // D. Voucher Currency Format Based on User Location/Nationality
-            const nationality = document.getElementById('nationality').value;
-            if (nationality === 'IND') return '₹';
-            if (nationality === 'ARE') return 'AED';
+            // 5. Currency logic based on Nationality (using Nationality as a client-side proxy for location)
+            const nationalityInput = document.getElementById('nationality').value;
+            if (nationalityInput.includes('India')) return '₹';
+            if (nationalityInput.includes('Emirates')) return 'AED';
             return '$'; // Default
         }
 
         function updateVoucherButtons() {
             const currencySymbol = getVoucherCurrencySymbol();
             let lastUnlockedStage = 'start';
-            let nextVoucherValue = STAGES.personal.voucher;
-            let nextVoucherLabel = STAGES.personal.label;
 
-            // Reset all buttons and find the next target
             for (const stageKey in STAGES) {
                 const stage = STAGES[stageKey];
                 const button = stage.button ? document.getElementById(stage.button) : null;
                 if (button) {
-                    button.style.display = 'none'; // Hide all initially
+                    button.style.display = 'none';
                 }
 
                 if (stage.isComplete) {
@@ -764,7 +844,6 @@
                 }
             }
 
-            // Determine the next stage to unlock
             const stagesOrder = Object.keys(STAGES);
             let nextStageKey = null;
             let currentVoucherValue = 0;
@@ -781,9 +860,8 @@
             }
             
             const nextStage = STAGES[nextStageKey] || null;
-            const currentStage = STAGES[lastUnlockedStage];
 
-            // Update main voucher display
+            // Update main voucher display (5)
             document.getElementById('voucher-value').innerHTML = `${currencySymbol}${currentVoucherValue}`;
 
             // Handle the button display and enablement
@@ -795,7 +873,7 @@
                     nextButton.style.display = 'block';
                     nextButton.innerHTML = `Generate ${currencySymbol}${nextStage.voucher} Voucher`;
 
-                    // B. Voucher Logic (gating by document status)
+                    // Gating by document status
                     if (nextDocRequired && !nextStage.docStatus) {
                         nextButton.disabled = true;
                         nextButton.innerHTML += ` (Need Document Upload)`;
@@ -814,17 +892,14 @@
             }
         }
 
-        // B. Document Upload Check
         function checkDocumentStatus(stageKey) {
             const stage = STAGES[stageKey];
             if (!stage || !stage.requiredDoc) return;
 
             const fileInput = document.getElementById(stage.requiredDoc);
             
-            // Update the stage docStatus based on files selected
             stage.docStatus = (fileInput && fileInput.files.length > 0);
 
-            // Update the chip status dynamically
             const docChip = document.getElementById(`${stageKey}-doc-status`);
             if (docChip) {
                  docChip.textContent = stage.docStatus ? 'Doc Uploaded' : 'Doc Required';
@@ -832,81 +907,104 @@
                  docChip.style.color = stage.docStatus ? '#059669' : '#6b7280';
             }
 
-            // Immediately recalculate score and update buttons
             updateScoreAndProgress();
         }
 
-        // --- 4. FORM AND VALIDATION LOGIC ---
+        // --- 5. FORM AND VALIDATION LOGIC (1) ---
 
         function validateTripDates() {
             const startInput = document.getElementById('tripStart');
             const endInput = document.getElementById('tripEnd');
             const startError = document.getElementById('tripStartError');
             const endError = document.getElementById('tripEndError');
-            const today = new Date().toISOString().split('T')[0];
+            
+            const startDate = parseMMYY(startInput.value);
+            const endDate = parseMMYY(endInput.value);
+            const today = new Date();
             let isValid = true;
+            
+            startInput.classList.remove('input-error');
+            startError.style.display = 'none';
+            endInput.classList.remove('input-error');
+            endError.style.display = 'none';
 
-            // C. Trip Dates: Cannot be in the past
-            if (startInput.value && startInput.value < today) {
-                startInput.classList.add('input-error');
-                startError.textContent = 'Trip must be in the future.';
-                startError.style.display = 'block';
-                isValid = false;
-            } else {
-                startInput.classList.remove('input-error');
-                startError.style.display = 'none';
+            // Check if MM/YY format is complete
+            if (startInput.value.length !== 5 || !startDate) {
+                if (startInput.value.length === 5) {
+                    startInput.classList.add('input-error');
+                    startError.textContent = 'Invalid MM/YY date.';
+                    startError.style.display = 'block';
+                    isValid = false;
+                }
             }
 
+            // C. Trip Dates: Cannot be in the past (must be in the future or current month)
+            if (startDate && startDate < new Date(today.getFullYear(), today.getMonth(), 1)) {
+                startInput.classList.add('input-error');
+                startError.textContent = 'Trip must be in the current or future month.';
+                startError.style.display = 'block';
+                isValid = false;
+            } 
+
             // C. Trip Dates: Start <= End
-            if (startInput.value && endInput.value && startInput.value > endInput.value) {
+            if (startDate && endDate && startDate > endDate) {
                 endInput.classList.add('input-error');
                 endError.textContent = 'End date cannot be before start date.';
                 endError.style.display = 'block';
                 isValid = false;
-            } else {
-                endInput.classList.remove('input-error');
-                endError.style.display = 'none';
             }
-            
+
+            updateScoreAndProgress();
             return isValid;
         }
         
+        // --- 6. FORM AND VALIDATION LOGIC (2) ---
+
         function validateTravelHistoryDates() {
             const travelRows = document.querySelectorAll('#travelHistoryTableBody tr');
             const travelHistoryError = document.getElementById('travelHistoryError');
             let hasError = false;
             const today = new Date();
+            const currentMonthStart = new Date(today.getFullYear(), today.getMonth(), 1);
 
             travelRows.forEach(row => {
                 const startInput = row.querySelector('.travel-start-date');
                 const endInput = row.querySelector('.travel-end-date');
-                const startDate = startInput.value ? new Date(startInput.value) : null;
-                const endDate = endInput.value ? new Date(endInput.value) : null;
-                
-                // C. Travel History Dates: Cannot be in the future
-                if (startDate && startDate > today) {
+                const startDate = parseMMYY(startInput.value);
+                const endDate = parseMMYY(endInput.value);
+
+                startInput.classList.remove('input-error');
+                endInput.classList.remove('input-error');
+
+                // Check if MM/YY format is complete
+                if (startInput.value.length !== 5 || !startDate) {
+                    if (startInput.value.length === 5) hasError = true;
+                }
+                if (endInput.value.length !== 5 || !endDate) {
+                    if (endInput.value.length === 5) hasError = true;
+                }
+
+                // C. Travel History Dates: Cannot be in the future (must be past month or current month)
+                if (startDate && startDate > currentMonthStart) {
                     startInput.classList.add('input-error');
                     hasError = true;
-                } else {
-                    startInput.classList.remove('input-error');
                 }
 
                 // C. Travel History Dates: Start <= End
                 if (startDate && endDate && startDate > endDate) {
                     endInput.classList.add('input-error');
                     hasError = true;
-                } else {
-                    endInput.classList.remove('input-error');
                 }
             });
 
             if (hasError) {
-                travelHistoryError.textContent = 'History dates must be in the past and start before the end date.';
+                travelHistoryError.textContent = 'History dates must be in the past (MM/YY) and start before the end date.';
                 travelHistoryError.style.display = 'block';
             } else {
                 travelHistoryError.style.display = 'none';
             }
 
+            updateScoreAndProgress();
             return !hasError;
         }
 
@@ -915,27 +1013,33 @@
             const data = new FormData(form);
             let totalComplete = 0;
 
+            // Helper to check if a datalist input has a value
+            const checkDatalistValue = (id) => document.getElementById(id).value.trim() !== '';
+
             // 1. Trip details (Must be filled)
-            STAGES.start.isComplete = data.get('destinationCountry') && data.get('tripPurpose') && data.get('tripStart') && data.get('tripEnd') && validateTripDates();
+            const tripDatesValid = validateTripDates();
+            STAGES.start.isComplete = checkDatalistValue('destinationCountry') && data.get('tripPurpose') && tripDatesValid;
             if (STAGES.start.isComplete) totalComplete = 1;
 
-            // 2. Personal Details (Must be filled)
-            STAGES.personal.isComplete = STAGES.start.isComplete && data.get('fullName') && data.get('age') && data.get('nationality') && data.get('maritalStatus');
+            // 2. Personal Details (Must be filled - 7 new field included)
+            STAGES.personal.isComplete = STAGES.start.isComplete && data.get('fullName') && data.get('age') && checkDatalistValue('nationality') && data.get('maritalStatus') && data.get('passportType');
             if (STAGES.personal.isComplete) totalComplete = 2;
 
             // 3. Occupation & Income (Must be filled)
-            STAGES.occupation.isComplete = STAGES.personal.isComplete && data.get('occupationStatus') && data.get('annualIncome') && data.get('incomeCurrency');
+            STAGES.occupation.isComplete = STAGES.personal.isComplete && data.get('occupationStatus') && data.get('annualIncome') && checkDatalistValue('incomeCurrency');
             if (STAGES.occupation.isComplete) totalComplete = 3;
 
             // 4. Travel History (Must have 1 valid row)
             const travelRows = document.querySelectorAll('#travelHistoryTableBody tr');
             let hasTravelHistory = false;
-            if (travelRows.length > 0 && validateTravelHistoryDates()) {
+            const historyDatesValid = validateTravelHistoryDates();
+
+            if (travelRows.length > 0 && historyDatesValid) {
                 travelRows.forEach(row => {
                     const country = row.querySelector('.travel-country').value;
                     const start = row.querySelector('.travel-start-date').value;
                     const end = row.querySelector('.travel-end-date').value;
-                    if (country && start && end) {
+                    if (country && start.length === 5 && end.length === 5) {
                         hasTravelHistory = true;
                     }
                 });
@@ -946,20 +1050,6 @@
             // 5. Visa Outcomes (Must be answered)
             STAGES.visa.isComplete = STAGES.travel.isComplete && data.get('visaOutcome') !== null;
             if (STAGES.visa.isComplete) totalComplete = 5;
-
-            // Ensure voucher buttons are enabled based on document status for each complete stage
-            for (const key in STAGES) {
-                if (STAGES[key].isComplete && STAGES[key].requiredDoc) {
-                    if (STAGES[key].docStatus) {
-                        // Stage complete AND Document uploaded
-                        totalComplete = Math.max(totalComplete, stagesOrder.indexOf(key) + 1);
-                    } else {
-                        // Stage complete BUT Document NOT uploaded
-                        // We do not allow progression past the score gate, but keep the progress bar accurate
-                        // Logic simplified: Score is based on input completion, Voucher enablement on doc upload
-                    }
-                }
-            }
             
             return totalComplete;
         }
@@ -969,10 +1059,9 @@
             const totalCompleteCount = checkStageCompletion();
             let currentMaxScore = 0;
             let currentVoucherValue = 0;
-            let currentStageKey = 'start';
             const recommendations = [];
 
-            // Update progress bar
+            // Update progress bar & score
             for (let i = 0; i < stagesOrder.length; i++) {
                 const key = stagesOrder[i];
                 const stage = STAGES[key];
@@ -982,34 +1071,37 @@
                     segment.classList.add('active');
                     currentMaxScore = stage.score;
                     currentVoucherValue = stage.voucher;
-                    currentStageKey = key;
                 } else {
                     segment.classList.remove('active');
                 }
             }
 
-            // Update Score Display
             document.getElementById('score-percentage').textContent = `${currentMaxScore}%`;
             document.querySelector('.score-bar-inner').style.width = `${currentMaxScore}%`;
 
-            // Update Recommendations
-            if (!STAGES.start.isComplete) {
-                recommendations.push("Complete **Trip Details** to begin score calculation.");
-            } else if (!STAGES.personal.isComplete) {
-                recommendations.push("Fill out **Personal Details** to reach 20%.");
-            } else if (STAGES.personal.isComplete && !STAGES.personal.docStatus) {
-                 recommendations.push("Upload **Passport** to unlock the first voucher.");
-            } else if (!STAGES.occupation.isComplete) {
-                recommendations.push("Fill out **Occupation & Income** to reach 40%.");
-            } else if (!STAGES.travel.isComplete) {
-                recommendations.push("Add **Travel History** entries to reach 70%.");
-            } else if (STAGES.travel.isComplete && !STAGES.travel.docStatus) {
-                 recommendations.push("Upload **Passport Stamps/Boarding Passes** for the ₹200 voucher.");
-            } else if (!STAGES.visa.isComplete) {
-                recommendations.push("Complete **Visa Outcome** section to reach 90%.");
-            } else if (STAGES.visa.isComplete && !STAGES.visa.docStatus) {
-                 recommendations.push("Upload **Visa Outcome Letter** for the final ₹1000 voucher.");
-            } else {
+            // Update Recommendations (simplified for brevity)
+            const recs = [
+                { stage: 'start', check: STAGES.start.isComplete, text: "Complete **Trip Details** to begin score calculation." },
+                { stage: 'personal', check: STAGES.personal.isComplete, text: "Fill out **Personal Details** to reach 20%." },
+                { stage: 'personal_doc', check: STAGES.personal.isComplete && STAGES.personal.docStatus, text: "Upload **Passport** to unlock the first voucher." },
+                { stage: 'occupation', check: STAGES.occupation.isComplete, text: "Fill out **Occupation & Income** to reach 40%." },
+                { stage: 'travel', check: STAGES.travel.isComplete, text: "Add **Travel History** entries to reach 70%." },
+                { stage: 'travel_doc', check: STAGES.travel.isComplete && STAGES.travel.docStatus, text: "Upload **Passport Stamps/Boarding Passes** for the ₹200 voucher." },
+                { stage: 'visa', check: STAGES.visa.isComplete, text: "Complete **Visa Outcome** section to reach 90%." },
+                { stage: 'visa_doc', check: STAGES.visa.isComplete && STAGES.visa.docStatus, text: "Upload **Visa Outcome Letter** for the final ₹1000 voucher." },
+            ];
+            
+            let completedAll = true;
+            for (const rec of recs) {
+                if (!rec.check) {
+                    recommendations.push(rec.text);
+                    completedAll = false;
+                    // Stop at the first unfulfilled requirement (or document step)
+                    break;
+                }
+            }
+
+            if (completedAll) {
                 recommendations.push("Profile is highly detailed. You have reached max potential score.");
             }
             
@@ -1029,48 +1121,33 @@
             const travelHistoryTableBody = document.getElementById('travelHistoryTableBody');
             const newRow = travelHistoryTableBody.insertRow();
             
-            // Generate a temporary row ID or index if needed for complex tracking, but simple structure suffices here.
-            
             newRow.innerHTML = `
-                <td><select class="travel-country" required><option value="">Select</option></select></td>
-                <td><input type="month" class="travel-start-date" onchange="validateTravelHistoryDates()" required></td>
-                <td><input type="month" class="travel-end-date" onchange="validateTravelHistoryDates()" required></td>
+                <td><input type="text" class="travel-country" list="country-list" placeholder="Country" required /></td>
+                <td><input type="text" class="travel-start-date" oninput="formatDateMMYY(this); validateTravelHistoryDates()" maxlength="5" placeholder="MM/YY" required></td>
+                <td><input type="text" class="travel-end-date" oninput="formatDateMMYY(this); validateTravelHistoryDates()" maxlength="5" placeholder="MM/YY" required></td>
                 <td><button type="button" class="btn-remove-row" onclick="removeTravelRow(this)">Remove</button></td>
             `;
-
-            // Repopulate country dropdown in the new row
-            const countrySelect = newRow.querySelector('.travel-country');
-            for (const key in COUNTRIES) {
-                const option = document.createElement('option');
-                option.value = key;
-                option.textContent = COUNTRIES[key];
-                countrySelect.appendChild(option);
-            }
 
             updateScoreAndProgress();
         }
 
-        // A. Travel History Edits: First row cannot be removed
         function removeTravelRow(button) {
             const row = button.parentNode.parentNode;
             const travelHistoryTableBody = document.getElementById('travelHistoryTableBody');
 
-            // Check if it's the initial non-removable row (Rule A)
             if (row.dataset.removable === 'false') {
                 return; // Prevent removal of the first row
             }
             
-            // Check if there's more than one row remaining (Rule A fallback)
             if (travelHistoryTableBody.rows.length > 1) {
                 row.remove();
                 updateScoreAndProgress();
             }
         }
 
-        // --- 5. INITIAL EXECUTION ---
+        // --- 7. INITIAL EXECUTION ---
         document.addEventListener('DOMContentLoaded', () => {
             populateDropdowns();
-            // Initial call to set score, progress, and voucher state (0% / ₹0)
             updateScoreAndProgress(); 
 
             // Initialize the first row's remove button state (disabled)
@@ -1080,7 +1157,6 @@
                 firstRowButton.textContent = 'Initial';
             }
             
-            // Add listeners for document uploads
             document.getElementById('passportUpload').addEventListener('change', () => checkDocumentStatus('personal'));
             document.getElementById('travelDocUpload').addEventListener('change', () => checkDocumentStatus('travel'));
             document.getElementById('visaDocUpload').addEventListener('change', () => checkDocumentStatus('visa'));
