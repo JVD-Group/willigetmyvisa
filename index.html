@@ -1,1086 +1,1106 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <title>Visa Probability Checker</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8" />
+  <title>Visa Probability Checker</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <style>
-        :root {
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-            color-scheme: light;
-        }
+  <style>
+    :root {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color-scheme: light;
+    }
 
-        * {
-            box-sizing: border-box;
-        }
+    * {
+      box-sizing: border-box;
+    }
 
-        body {
-            margin: 0;
-            padding: 0;
-            background: #f3f4f6;
-            color: #111827;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            min-height: 100vh;
-        }
+    body {
+      margin: 0;
+      padding: 0;
+      background: #f3f4f6;
+      color: #111827;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+    }
 
-        .page {
-            width: 100%;
-            max-width: 1200px;
-            padding: 16px 12px 40px;
-        }
+    .page {
+      width: 100%;
+      max-width: 1200px;
+      padding: 16px 12px 40px;
+    }
 
-        header {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            margin-bottom: 16px;
-        }
+    header {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
 
-        .header-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 12px;
-        }
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
 
-        .logo {
-            font-weight: 700;
-            font-size: 22px;
-            letter-spacing: 0.03em;
-            color: #111827;
-        }
+    .logo {
+      font-weight: 700;
+      font-size: 22px;
+      letter-spacing: 0.03em;
+      color: #111827;
+    }
 
-        .logo span {
-            color: #2563eb;
-        }
+    .logo span {
+      color: #2563eb;
+    }
 
-        .pill {
-            font-size: 12px;
-            padding: 6px 10px;
-            border-radius: 999px;
-            border: 1px solid #d1d5db;
-            background: #f9fafb;
-            color: #4b5563;
-            white-space: nowrap;
-        }
+    .pill {
+      font-size: 12px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid #d1d5db;
+      background: #f9fafb;
+      color: #4b5563;
+      white-space: nowrap;
+    }
 
-        .top-nav {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 16px;
-            font-size: 14px;
-            margin-top: 4px;
-        }
+    .top-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      font-size: 14px;
+      margin-top: 4px;
+    }
 
-        .top-nav a {
-            text-decoration: none;
-            color: #4b5563;
-            padding-bottom: 4px;
-            border-bottom: 2px solid transparent;
-        }
+    .top-nav a {
+      text-decoration: none;
+      color: #4b5563;
+      padding-bottom: 4px;
+      border-bottom: 2px solid transparent;
+    }
 
-        .top-nav a.active {
-            color: #111827;
-            border-bottom-color: #2563eb;
-            font-weight: 500;
-        }
+    .top-nav a.active {
+      color: #111827;
+      border-bottom-color: #2563eb;
+      font-weight: 500;
+    }
 
-        @media (max-width: 640px) {
-            .header-top {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            .pill {
-                width: 100%;
-                text-align: left;
-            }
-        }
+    @media (max-width: 640px) {
+      .header-top {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .pill {
+        width: 100%;
+        text-align: left;
+      }
+    }
 
-        main {
-            display: grid;
-            grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
-            gap: 16px;
-        }
+    main {
+      display: grid;
+      grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+      gap: 16px;
+    }
 
-        @media (max-width: 960px) {
-            main {
-                grid-template-columns: 1fr;
-            }
-        }
+    @media (max-width: 960px) {
+      main {
+        grid-template-columns: 1fr;
+      }
+    }
 
-        .card {
-            background: #ffffff;
-            border-radius: 16px;
-            border: 1px solid #e5e7eb;
-            box-shadow: 0 18px 40px rgba(15, 23, 42, 0.06);
-            padding: 20px 18px 18px;
-        }
+    .card {
+      background: #ffffff;
+      border-radius: 16px;
+      border: 1px solid #e5e7eb;
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.06);
+      padding: 20px 18px 18px;
+    }
 
-        h1 {
-            margin: 0 0 6px;
-            font-size: 24px;
-            color: #111827;
-        }
+    h1 {
+      margin: 0 0 6px;
+      font-size: 24px;
+      color: #111827;
+    }
 
-        h2 {
-            margin: 0 0 10px;
-            font-size: 14px;
-            color: #4b5563;
-            font-weight: 500;
-        }
+    h2 {
+      margin: 0 0 10px;
+      font-size: 14px;
+      color: #4b5563;
+      font-weight: 500;
+    }
 
-        h3 {
-            margin: 16px 0 8px;
-            font-size: 15px;
-            color: #111827;
-        }
+    h3 {
+      margin: 16px 0 8px;
+      font-size: 15px;
+      color: #111827;
+    }
 
-        p {
-            margin: 0 0 8px;
-            line-height: 1.5;
-            font-size: 14px;
-            color: #4b5563;
-        }
+    p {
+      margin: 0 0 8px;
+      line-height: 1.5;
+      font-size: 14px;
+      color: #4b5563;
+    }
 
-        label {
-            display: block;
-            font-size: 13px;
-            margin-bottom: 4px;
-            color: #111827;
-        }
+    label {
+      display: block;
+      font-size: 13px;
+      margin-bottom: 4px;
+      color: #111827;
+    }
 
-        input,
-        select,
-        textarea {
-            width: 100%;
-            padding: 7px 8px;
-            border-radius: 8px;
-            border: 1px solid #d1d5db;
-            background: #ffffff;
-            color: #111827;
-            font-size: 13px;
-            margin-bottom: 8px;
-        }
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 7px 8px;
+      border-radius: 8px;
+      border: 1px solid #d1d5db;
+      background: #ffffff;
+      color: #111827;
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
 
-        input:focus,
-        select:focus,
-        textarea:focus {
-            outline: none;
-            border-color: #2563eb;
-            box-shadow: 0 0 0 1px #2563eb20;
-        }
+    input:focus,
+    select:focus,
+    textarea:focus {
+      outline: none;
+      border-color: #2563eb;
+      box-shadow: 0 0 0 1px #2563eb20;
+    }
 
-        input[type="file"] {
-            padding: 4px;
-        }
+    input[type="file"] {
+      padding: 4px;
+    }
 
-        .input-error {
-            border-color: #dc2626 !important;
-            background: #fef2f2;
-        }
+    .input-error {
+      border-color: #dc2626 !important;
+      background: #fef2f2;
+    }
 
-        .error-text {
-            font-size: 11px;
-            color: #b91c1c;
-            margin-top: -2px;
-            margin-bottom: 6px;
-        }
+    .error-text {
+      font-size: 11px;
+      color: #b91c1c;
+      margin-top: -2px;
+      margin-bottom: 6px;
+    }
 
-        .two-col {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-        }
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
 
-        @media (max-width: 640px) {
-            .two-col {
-                grid-template-columns: 1fr;
-            }
-        }
+    @media (max-width: 640px) {
+      .two-col {
+        grid-template-columns: 1fr;
+      }
+    }
 
-        .hint {
-            font-size: 11px;
-            color: #6b7280;
-            margin-top: -2px;
-            margin-bottom: 6px;
-        }
+    .hint {
+      font-size: 11px;
+      color: #6b7280;
+      margin-top: -2px;
+      margin-bottom: 6px;
+    }
 
-        .step-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin: 8px 0 14px;
-            font-size: 11px;
-            color: #6b7280;
-        }
+    .step-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 8px 0 14px;
+      font-size: 11px;
+      color: #6b7280;
+    }
 
-        .step-track {
-            flex: 1;
-            height: 4px;
-            border-radius: 999px;
-            background: #e5e7eb;
-            margin-right: 10px;
-            display: flex;
-            overflow: hidden;
-        }
+    .step-track {
+      flex: 1;
+      height: 4px;
+      border-radius: 999px;
+      background: #e5e7eb;
+      margin-right: 10px;
+      display: flex;
+      overflow: hidden;
+    }
 
-        .step-segment {
-            flex: 1;
-            background: #e5e7eb;
-            transition: background 0.15s ease-out;
-        }
+    .step-segment {
+      flex: 1;
+      background: #e5e7eb;
+      transition: background 0.15s ease-out;
+    }
 
-        .step-segment.active {
-            background: linear-gradient(90deg, #22c55e, #15803d);
-        }
+    .step-segment.active {
+      background: linear-gradient(90deg, #22c55e, #15803d);
+    }
 
-        .step-labels {
-            display: flex;
-            justify-content: space-between;
-            font-size: 10px;
-            color: #6b7280;
-            gap: 4px;
-            margin-bottom: 4px;
-        }
+    .step-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 10px;
+      color: #6b7280;
+      gap: 4px;
+      margin-bottom: 4px;
+    }
 
-        .step-labels span {
-            flex: 1;
-            text-align: center;
-            white-space: nowrap;
-        }
+    .step-labels span {
+      flex: 1;
+      text-align: center;
+      white-space: nowrap;
+    }
 
-        /* Right panel – score + voucher */
+    .score-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 10px;
+      gap: 12px;
+    }
 
-        .score-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 10px;
-            gap: 12px;
-        }
+    .score-main {
+      font-size: 13px;
+      color: #4b5563;
+    }
 
-        .score-main {
-            font-size: 13px;
-            color: #4b5563;
-        }
+    .score-main span {
+      display: block;
+      font-size: 26px;
+      font-weight: 600;
+      color: #111827;
+    }
 
-        .score-main span {
-            display: block;
-            font-size: 26px;
-            font-weight: 600;
-            color: #111827;
-        }
+    .stage-label {
+      font-size: 11px;
+      color: #6b7280;
+      margin-top: 2px;
+    }
 
-        .stage-label {
-            font-size: 11px;
-            color: #6b7280;
-            margin-top: 2px;
-        }
+    .voucher-box {
+      padding: 8px 12px;
+      border-radius: 12px;
+      border: 1px solid #d1d5db;
+      background: #f9fafb;
+      font-size: 13px;
+      margin-bottom: 12px;
+    }
 
-        .voucher-box {
-            padding: 8px 12px;
-            border-radius: 12px;
-            border: 1px solid #d1d5db;
-            background: #f9fafb;
-            font-size: 13px;
-            margin-bottom: 12px;
-        }
+    .voucher-box p {
+      font-size: 12px;
+      color: #4b5563;
+    }
 
-        .voucher-box p {
-            font-size: 12px;
-            color: #4b5563;
-        }
+    .voucher-box .voucher-value {
+      font-size: 18px;
+      font-weight: 600;
+      color: #10b981;
+      margin: 4px 0;
+    }
 
-        .voucher-box .voucher-value {
-            font-size: 18px;
-            font-weight: 600;
-            color: #10b981;
-            margin: 4px 0;
-        }
+    .btn-primary {
+      display: inline-block;
+      padding: 8px 16px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #ffffff;
+      background: #2563eb;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.15s ease;
+      width: 100%;
+      text-align: center;
+    }
 
-        .btn-primary {
-            display: inline-block;
-            padding: 8px 16px;
-            font-size: 14px;
-            font-weight: 600;
-            color: #ffffff;
-            background: #2563eb;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background 0.15s ease;
-            width: 100%;
-            text-align: center;
-        }
+    .btn-primary:hover {
+      background: #1d4ed8;
+    }
 
-        .btn-primary:hover {
-            background: #1d4ed8;
-        }
+    .btn-primary:disabled {
+      background: #9ca3af;
+      cursor: not-allowed;
+    }
 
-        .btn-primary:disabled {
-            background: #9ca3af;
-            cursor: not-allowed;
-        }
+    .btn-remove-row {
+      padding: 4px 8px;
+      font-size: 12px;
+      background: #fef2f2;
+      color: #dc2626;
+      border: 1px solid #fca5a5;
+      border-radius: 6px;
+      cursor: pointer;
+      width: 100%;
+    }
 
-        .btn-remove-row {
-            padding: 4px 8px;
-            font-size: 12px;
-            background: #fef2f2;
-            color: #dc2626;
-            border: 1px solid #fca5a5;
-            border-radius: 6px;
-            cursor: pointer;
-            width: 100%;
-        }
+    .travel-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
 
-        .travel-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 10px;
-        }
+    .travel-table th,
+    .travel-table td {
+      padding: 6px 4px;
+      text-align: left;
+      border-bottom: 1px solid #e5e7eb;
+      vertical-align: top;
+    }
 
-        .travel-table th, .travel-table td {
-            padding: 6px 4px;
-            text-align: left;
-            border-bottom: 1px solid #e5e7eb;
-            vertical-align: top;
-        }
+    .travel-table th {
+      font-size: 12px;
+      color: #6b7280;
+    }
 
-        .travel-table th {
-            font-size: 12px;
-            color: #6b7280;
-        }
+    .travel-table input,
+    .travel-table select {
+      margin-bottom: 0;
+      height: 32px;
+      font-size: 12px;
+    }
 
-        .travel-table input, .travel-table select {
-            margin-bottom: 0;
-            height: 32px;
-            font-size: 12px;
-        }
+    .travel-table td:last-child {
+      width: 80px;
+    }
 
-        .travel-table td:last-child {
-            width: 80px;
-        }
+    .recommendations {
+      margin-top: 15px;
+      padding: 0;
+      list-style: disc inside;
+    }
 
-        .recommendations {
-            margin-top: 15px;
-            padding: 0;
-            list-style: disc inside;
-        }
-
-        .recommendations li {
-            font-size: 13px;
-            color: #4b5563;
-            margin-bottom: 5px;
-            padding-left: 5px;
-        }
-    </style>
+    .recommendations li {
+      font-size: 13px;
+      color: #4b5563;
+      margin-bottom: 5px;
+      padding-left: 5px;
+    }
+  </style>
 </head>
 <body>
-    <div class="page">
-        <header>
-            <div class="header-top">
-                <div class="logo">VisaPro <span>Checker</span></div>
-                <div class="pill">Current Visa: Schengen (France)</div>
+  <div class="page">
+    <header>
+      <div class="header-top">
+        <div class="logo">VisaPro <span>Checker</span></div>
+        <div class="pill">Current Visa: Schengen (France)</div>
+      </div>
+      <nav class="top-nav">
+        <a href="#" class="active">Probability Score</a>
+        <a href="#">Visa Resources</a>
+        <a href="#">FAQ</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="card">
+        <h1>Visa Probability Calculation</h1>
+        <h2>Fill in the details below to calculate your estimated visa success score.</h2>
+
+        <form id="visa-form">
+          <div class="step-bar">
+            <div class="step-track">
+              <div class="step-segment active" id="step-start"></div>
+              <div class="step-segment" id="step-personal"></div>
+              <div class="step-segment" id="step-occupation"></div>
+              <div class="step-segment" id="step-travel"></div>
+              <div class="step-segment" id="step-visa"></div>
             </div>
-            <nav class="top-nav">
-                <a href="#" class="active">Probability Score</a>
-                <a href="#">Visa Resources</a>
-                <a href="#">FAQ</a>
-            </nav>
-        </header>
+            <div id="score-value">0%</div>
+          </div>
+          <div class="step-labels">
+            <span>Trip</span>
+            <span>Personal</span>
+            <span>Finances</span>
+            <span>Travel</span>
+            <span>Outcome</span>
+          </div>
 
-        <main>
-            <section class="card">
-                <h1>Visa Probability Calculation</h1>
-                <h2>Fill in the details below to calculate your estimated visa success score.</h2>
+          <h3>1. Trip Details</h3>
+          <div class="two-col">
+            <div>
+              <label for="destinationCountry">Destination Country</label>
+              <select id="destinationCountry" class="country-select">
+                <option value="">Select a country</option>
+              </select>
+            </div>
+            <div>
+              <label for="travelPurpose">Purpose of Visit</label>
+              <select id="travelPurpose">
+                <option value="">Select purpose</option>
+                <option value="tourism">Tourism</option>
+                <option value="business">Business</option>
+                <option value="family">Visiting Family/Friends</option>
+                <option value="study">Study/Education</option>
+                <option value="medical">Medical Treatment</option>
+              </select>
+            </div>
+          </div>
+          <div class="two-col">
+            <div>
+              <label for="travelStart">Start Date (MM/YY)</label>
+              <input type="text" id="travelStart" class="mm-yy" maxlength="5" placeholder="MM/YY" />
+            </div>
+            <div>
+              <label for="travelEnd">End Date (MM/YY)</label>
+              <input type="text" id="travelEnd" class="mm-yy" maxlength="5" placeholder="MM/YY" />
+            </div>
+          </div>
+          <div>
+            <label for="lengthOfStay">Length of Stay (Days)</label>
+            <input type="number" id="lengthOfStay" min="1" max="180" placeholder="e.g., 7" />
+          </div>
+          <p class="error-text" id="tripDateError" style="display: none;"></p>
 
-                <form id="visa-form">
-                    <div class="step-bar">
-                        <div class="step-track">
-                            <div class="step-segment active" id="step-start" style="width: 20%;"></div>
-                            <div class="step-segment" id="step-personal" style="width: 20%;"></div>
-                            <div class="step-segment" id="step-occupation" style="width: 20%;"></div>
-                            <div class="step-segment" id="step-travel" style="width: 20%;"></div>
-                            <div class="step-segment" id="step-visa" style="width: 20%;"></div>
-                        </div>
-                        <div id="score-value">0%</div>
-                    </div>
-                    <div class="step-labels">
-                        <span>Trip</span>
-                        <span>Personal</span>
-                        <span>Finances</span>
-                        <span>Travel</span>
-                        <span>Outcome</span>
-                    </div>
+          <h3>2. Personal Details</h3>
+          <div class="two-col">
+            <div>
+              <label for="fullName">Full Name</label>
+              <input type="text" id="fullName" placeholder="John Doe" />
+            </div>
+            <div>
+              <label for="age">Age</label>
+              <input type="number" id="age" min="18" max="99" placeholder="e.g., 30" />
+            </div>
+          </div>
+          <div class="two-col">
+            <div>
+              <label for="nationality">Nationality</label>
+              <select id="nationality" class="country-select">
+                <option value="">Select nationality</option>
+              </select>
+            </div>
+            <div>
+              <label for="maritalStatus">Marital Status</label>
+              <select id="maritalStatus">
+                <option value="">Select status</option>
+                <option value="single">Single</option>
+                <option value="married">Married</option>
+                <option value="divorced">Divorced</option>
+                <option value="widowed">Widowed</option>
+              </select>
+            </div>
+          </div>
+          <label for="passportDocs">Upload Passport Bio-Pages/Visa Stamps</label>
+          <input type="file" id="passportDocs" accept=".pdf, .jpg, .png" multiple />
+          <p class="hint">Required for Tier 1 Voucher.</p>
 
-                    <h3>1. Trip Details</h3>
-                    <div class="two-col">
-                        <div>
-                            <label for="destinationCountry">Destination Country</label>
-                            <select id="destinationCountry" class="country-select">
-                                <option value="">Select a country</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label for="travelPurpose">Purpose of Visit</label>
-                            <select id="travelPurpose">
-                                <option value="">Select purpose</option>
-                                <option value="tourism">Tourism</option>
-                                <option value="business">Business</option>
-                                <option value="family">Visiting Family/Friends</option>
-                                <option value="study">Study/Education</option>
-                                <option value="medical">Medical Treatment</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="two-col">
-                        <div>
-                            <label for="lengthOfStay">Length of Stay (Days)</label>
-                            <input type="number" id="lengthOfStay" min="1" max="180" placeholder="e.g., 7" />
-                        </div>
-                        <div class="two-col">
-                            <div>
-                                <label for="travelStart">Start Date (MM/YY)</label>
-                                <input type="text" id="travelStart" class="mm-yy" maxlength="5" placeholder="MM/YY" />
-                            </div>
-                            <div>
-                                <label for="travelEnd">End Date (MM/YY)</label>
-                                <input type="text" id="travelEnd" class="mm-yy" maxlength="5" placeholder="MM/YY" />
-                            </div>
-                        </div>
-                    </div>
-                    <p class="error-text" id="tripDateError" style="display: none;"></p>
+          <h3>3. Occupation & Financial Details</h3>
+          <div class="two-col">
+            <div>
+              <label for="occupationStatus">Current Occupation Status</label>
+              <select id="occupationStatus">
+                <option value="">Select status</option>
+                <option value="employed">Employed</option>
+                <option value="self-employed">Self-Employed</option>
+                <option value="student">Student</option>
+                <option value="retired">Retired</option>
+                <option value="unemployed">Unemployed</option>
+              </select>
+            </div>
+            <div>
+              <label for="employmentType">Employment Type</label>
+              <select id="employmentType">
+                <option value="">Select type</option>
+                <option value="full-time">Full-Time</option>
+                <option value="part-time">Part-Time</option>
+                <option value="contract">Contract/Freelance</option>
+                <option value="n/a">Not Applicable</option>
+              </select>
+            </div>
+          </div>
+          <div class="two-col">
+            <div>
+              <label for="annualIncome">Annual Income</label>
+              <input type="number" id="annualIncome" min="0" placeholder="e.g., 50000" />
+            </div>
+            <div>
+              <label for="incomeCurrency">Currency</label>
+              <select id="incomeCurrency" class="currency-select">
+                <option value="">Select currency</option>
+              </select>
+            </div>
+          </div>
 
-                    <h3>2. Personal Details</h3>
-                    <div class="two-col">
-                        <div>
-                            <label for="fullName">Full Name</label>
-                            <input type="text" id="fullName" placeholder="John Doe" />
-                        </div>
-                        <div>
-                            <label for="age">Age</label>
-                            <input type="number" id="age" min="18" max="99" placeholder="e.g., 30" />
-                        </div>
-                    </div>
-                    <div class="two-col">
-                        <div>
-                            <label for="nationality">Nationality</label>
-                            <select id="nationality" class="country-select">
-                                <option value="">Select nationality</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label for="maritalStatus">Marital Status</label>
-                            <select id="maritalStatus">
-                                <option value="">Select status</option>
-                                <option value="single">Single</option>
-                                <option value="married">Married</option>
-                                <option value="divorced">Divorced</option>
-                                <option value="widowed">Widowed</option>
-                            </select>
-                        </div>
-                    </div>
-                    <label for="passportDocs">Upload Passport Bio-Pages/Visa Stamps</label>
-                    <input type="file" id="passportDocs" accept=".pdf, .jpg, .png" multiple />
-                    <p class="hint">Required for Tier 1 Voucher.</p>
+          <h3>4. Travel History (Last 5 Years)</h3>
+          <table class="travel-table">
+            <thead>
+              <tr>
+                <th>Country Visited</th>
+                <th style="width: 100px;">Start Date</th>
+                <th style="width: 100px;">End Date</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="travel-body"></tbody>
+          </table>
+          <p class="error-text" id="travelDateError" style="display: none;"></p>
+          <button type="button" id="add-travel-row" class="btn-primary" style="margin-top: 10px;">
+            + Add Previous Trip
+          </button>
+          <p class="hint">At least one entry is required for score calculation.</p>
 
+          <label for="travelDocs">Upload Old Visa & Entry/Exit Stamps (If available)</label>
+          <input type="file" id="travelDocs" accept=".pdf, .jpg, .png" multiple />
+          <p class="hint">Required for Tier 3 Voucher.</p>
 
-                    <h3>3. Occupation & Financial Details</h3>
-                    <div class="two-col">
-                        <div>
-                            <label for="occupationStatus">Current Occupation Status</label>
-                            <select id="occupationStatus">
-                                <option value="">Select status</option>
-                                <option value="employed">Employed</option>
-                                <option value="self-employed">Self-Employed</option>
-                                <option value="student">Student</option>
-                                <option value="retired">Retired</option>
-                                <option value="unemployed">Unemployed</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label for="employmentType">Employment Type</label>
-                            <select id="employmentType">
-                                <option value="">Select type</option>
-                                <option value="full-time">Full-Time</option>
-                                <option value="part-time">Part-Time</option>
-                                <option value="contract">Contract/Freelance</option>
-                                <option value="n/a">Not Applicable</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="two-col">
-                        <div>
-                            <label for="annualIncome">Annual Income</label>
-                            <input type="number" id="annualIncome" min="0" placeholder="e.g., 50000" />
-                        </div>
-                        <div>
-                            <label for="incomeCurrency">Currency</label>
-                            <select id="incomeCurrency" class="currency-select">
-                                <option value="">Select currency</option>
-                            </select>
-                        </div>
-                    </div>
+          <h3>5. Visa Outcome (Post-Trip Feedback)</h3>
+          <p>Once your trip is complete, please update the result to help improve the model.</p>
+          <div style="display: flex; gap: 20px; margin-bottom: 10px;">
+            <div>
+              <input type="radio" id="visaResultYes" name="visaResult" value="approved" />
+              <label for="visaResultYes" style="display: inline-block;">Approved</label>
+            </div>
+            <div>
+              <input type="radio" id="visaResultNo" name="visaResult" value="rejected" />
+              <label for="visaResultNo" style="display: inline-block;">Rejected</label>
+            </div>
+          </div>
+          <label for="visaOutcomeFile">Upload Visa Outcome/Rejection Letter</label>
+          <input type="file" id="visaOutcomeFile" accept=".pdf, .jpg, .png" />
+          <p class="hint">Required for final Score & Tier 4 Voucher.</p>
+        </form>
+      </section>
 
+      <section class="card">
+        <div class="score-header">
+          <div class="score-main">
+            Estimated Visa Score
+            <span id="score-value-big">0%</span>
+          </div>
+          <div class="pill">Current Score</div>
+        </div>
 
-                    <h3>4. Travel History (Last 5 Years)</h3>
-                    <table class="travel-table">
-                        <thead>
-                            <tr>
-                                <th>Country Visited</th>
-                                <th style="width: 100px;">Start Date</th>
-                                <th style="width: 100px;">End Date</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody id="travel-body">
-                            </tbody>
-                    </table>
-                    <p class="error-text" id="travelDateError" style="display: none;"></p>
-                    <button type="button" id="add-travel-row" class="btn-primary" style="margin-top: 10px;">+ Add Previous Trip</button>
-                    <p class="hint">At least one entry is required for score calculation.</p>
+        <div class="voucher-box">
+          <h3>🎁 Unlock Your Travel Voucher</h3>
+          <p id="voucher-help">Fill your personal details to unlock your first voucher.</p>
+          <div class="voucher-value" id="voucher-value">$0</div>
+          <button type="button" id="generate-voucher-btn" class="btn-primary" disabled>
+            Generate Voucher Code
+          </button>
+        </div>
 
-                    <label for="travelDocs">Upload Old Visa & Entry/Exit Stamps (If available)</label>
-                    <input type="file" id="travelDocs" accept=".pdf, .jpg, .png" multiple />
-                    <p class="hint">Required for Tier 3 Voucher.</p>
+        <div class="stage-label" id="stage-label">Current stage: Trip details</div>
 
+        <h3>Actionable Recommendations</h3>
+        <ul class="recommendations" id="recommendations-list">
+          <li>Start by filling in your trip details (destination, dates, purpose).</li>
+        </ul>
 
-                    <h3>5. Visa Outcome (Post-Trip Feedback)</h3>
-                    <p>Once your trip is complete, please update the result to help improve the model.</p>
-                    <div style="display: flex; gap: 20px; margin-bottom: 10px;">
-                        <div>
-                            <input type="radio" id="visaResultYes" name="visaResult" value="approved" />
-                            <label for="visaResultYes" style="display: inline-block;">Approved</label>
-                        </div>
-                        <div>
-                            <input type="radio" id="visaResultNo" name="visaResult" value="rejected" />
-                            <label for="visaResultNo" style="display: inline-block;">Rejected</label>
-                        </div>
-                    </div>
-                    <label for="visaOutcomeFile">Upload Visa Outcome/Rejection Letter</label>
-                    <input type="file" id="visaOutcomeFile" accept=".pdf, .jpg, .png" />
-                    <p class="hint">Required for final Score & Tier 4 Voucher.</p>
+        <hr style="margin-top: 20px; border: 0; border-top: 1px solid #e5e7eb;" />
 
-                </form>
-            </section>
+        <h3>How We Calculate the Score</h3>
+        <p>
+          Your Visa Probability Score is calculated based on five main factors, each representing a step in the
+          application process. Completing each step increases your score and unlocks a higher-value travel voucher.
+        </p>
+        <p class="hint">
+          **Disclaimer:** This is an estimated score and not a guarantee of visa approval.
+        </p>
+      </section>
+    </main>
+  </div>
 
-            <section class="card">
-                <div class="score-header">
-                    <div class="score-main">
-                        Estimated Visa Score
-                        <span id="score-value-big">0%</span>
-                    </div>
-                    <div class="pill">Current Score</div>
-                </div>
+  <script>
+    // --- User currency detection (simple heuristic) ---
+    const voucherCurrency = (() => {
+      try {
+        const lang = (navigator.language || "").toLowerCase();
+        const tz = (Intl.DateTimeFormat().resolvedOptions().timeZone || "").toLowerCase();
+        if (lang.includes("in") || tz.includes("kolkata")) {
+          return { symbol: "₹", code: "INR", locale: "en-IN" };
+        }
+        if (lang.includes("ae") || tz.includes("dubai") || tz.includes("abudhabi") || tz.includes("abu_dhabi")) {
+          return { symbol: "AED ", code: "AED", locale: "en-AE" };
+        }
+      } catch (e) {}
+      return { symbol: "$", code: "USD", locale: "en-US" };
+    })();
 
-                <div class="voucher-box">
-                    <h3>🎁 Unlock Your Travel Voucher</h3>
-                    <p id="voucher-help">Fill your personal details to unlock your first voucher.</p>
-                    <div class="voucher-value" id="voucher-value">$0</div>
-                    <button type="button" id="generate-voucher-btn" class="btn-primary" disabled>
-                        Generate Voucher Code
-                    </button>
-                </div>
-                
-                <div class="stage-label" id="stage-label">Current stage: Trip details</div>
+    // --- Country & currency lists ---
+    const COUNTRIES = [
+      "Afghanistan","Albania","Algeria","Andorra","Angola","Antigua and Barbuda","Argentina","Armenia",
+      "Australia","Austria","Azerbaijan","Bahamas","Bahrain","Bangladesh","Barbados","Belarus","Belgium",
+      "Belize","Benin","Bhutan","Bolivia","Bosnia and Herzegovina","Botswana","Brazil","Brunei","Bulgaria",
+      "Burkina Faso","Burundi","Cambodia","Cameroon","Canada","Cape Verde","Central African Republic","Chad",
+      "Chile","China","Colombia","Comoros","Congo (Democratic Republic)","Congo (Republic)","Costa Rica",
+      "Croatia","Cuba","Cyprus","Czech Republic","Denmark","Djibouti","Dominica","Dominican Republic",
+      "Ecuador","Egypt","El Salvador","Equatorial Guinea","Eritrea","Estonia","Eswatini","Ethiopia",
+      "Fiji","Finland","France","Gabon","Gambia","Georgia","Germany","Ghana","Greece","Grenada","Guatemala",
+      "Guinea","Guinea-Bissau","Guyana","Haiti","Honduras","Hungary","Iceland","India","Indonesia","Iran",
+      "Iraq","Ireland","Israel","Italy","Ivory Coast","Jamaica","Japan","Jordan","Kazakhstan","Kenya",
+      "Kiribati","Kuwait","Kyrgyzstan","Laos","Latvia","Lebanon","Lesotho","Liberia","Libya","Liechtenstein",
+      "Lithuania","Luxembourg","Madagascar","Malawi","Malaysia","Maldives","Mali","Malta","Mauritania",
+      "Mauritius","Mexico","Moldova","Monaco","Mongolia","Montenegro","Morocco","Mozambique","Myanmar",
+      "Namibia","Nauru","Nepal","Netherlands","New Zealand","Nicaragua","Niger","Nigeria","North Macedonia",
+      "Norway","Oman","Pakistan","Panama","Papua New Guinea","Paraguay","Peru","Philippines","Poland",
+      "Portugal","Qatar","Romania","Russia","Rwanda","Saint Kitts and Nevis","Saint Lucia",
+      "Saint Vincent and the Grenadines","Samoa","San Marino","Sao Tome and Principe","Saudi Arabia",
+      "Senegal","Serbia","Seychelles","Sierra Leone","Singapore","Slovakia","Slovenia","Solomon Islands",
+      "Somalia","South Africa","South Korea","South Sudan","Spain","Sri Lanka","Sudan","Suriname","Sweden",
+      "Switzerland","Syria","Taiwan","Tajikistan","Tanzania","Thailand","Timor-Leste","Togo","Tonga",
+      "Trinidad and Tobago","Tunisia","Turkey","Turkmenistan","Tuvalu","Uganda","Ukraine",
+      "United Arab Emirates","United Kingdom","United States","Uruguay","Uzbekistan","Vanuatu","Vatican City",
+      "Venezuela","Vietnam","Yemen","Zambia","Zimbabwe"
+    ];
 
-                <h3>Actionable Recommendations</h3>
-                <ul class="recommendations" id="recommendations-list">
-                    <li>Start by filling in your trip details (destination, dates, purpose).</li>
-                </ul>
+    const CURRENCIES = [
+      "AED - UAE Dirham","AFN - Afghan Afghani","ALL - Albanian Lek","AMD - Armenian Dram",
+      "ANG - Netherlands Antillean Guilder","AOA - Angolan Kwanza","ARS - Argentine Peso",
+      "AUD - Australian Dollar","AWG - Aruban Florin","AZN - Azerbaijani Manat",
+      "BAM - Bosnia and Herzegovina Convertible Mark","BBD - Barbadian Dollar","BDT - Bangladeshi Taka",
+      "BGN - Bulgarian Lev","BHD - Bahraini Dinar","BIF - Burundian Franc","BMD - Bermudian Dollar",
+      "BND - Brunei Dollar","BOB - Bolivian Boliviano","BRL - Brazilian Real","BSD - Bahamian Dollar",
+      "BTN - Bhutanese Ngultrum","BWP - Botswana Pula","BYN - Belarusian Ruble","BZD - Belize Dollar",
+      "CAD - Canadian Dollar","CDF - Congolese Franc","CHF - Swiss Franc","CLP - Chilean Peso",
+      "CNY - Chinese Yuan","COP - Colombian Peso","CRC - Costa Rican Colón","CUP - Cuban Peso",
+      "CVE - Cape Verdean Escudo","CZK - Czech Koruna","DJF - Djiboutian Franc","DKK - Danish Krone",
+      "DOP - Dominican Peso","DZD - Algerian Dinar","EGP - Egyptian Pound","ERN - Eritrean Nakfa",
+      "ETB - Ethiopian Birr","EUR - Euro","FJD - Fijian Dollar","FKP - Falkland Islands Pound",
+      "GBP - British Pound","GEL - Georgian Lari","GHS - Ghanaian Cedi","GIP - Gibraltar Pound",
+      "GMD - Gambian Dalasi","GNF - Guinean Franc","GTQ - Guatemalan Quetzal","GYD - Guyanese Dollar",
+      "HKD - Hong Kong Dollar","HNL - Honduran Lempira","HRK - Croatian Kuna","HTG - Haitian Gourde",
+      "HUF - Hungarian Forint","IDR - Indonesian Rupiah","ILS - Israeli New Shekel",
+      "INR - Indian Rupee","IQD - Iraqi Dinar","IRR - Iranian Rial","ISK - Icelandic Króna",
+      "JMD - Jamaican Dollar","JOD - Jordanian Dinar","JPY - Japanese Yen","KES - Kenyan Shilling",
+      "KGS - Kyrgyzstani Som","KHR - Cambodian Riel","KMF - Comorian Franc","KRW - South Korean Won",
+      "KWD - Kuwaiti Dinar","KYD - Cayman Islands Dollar","KZT - Kazakhstani Tenge",
+      "LAK - Lao Kip","LBP - Lebanese Pound","LKR - Sri Lankan Rupee","LRD - Liberian Dollar",
+      "LSL - Lesotho Loti","LYD - Libyan Dinar","MAD - Moroccan Dirham","MDL - Moldovan Leu",
+      "MGA - Malagasy Ariary","MKD - Macedonian Denar","MMK - Burmese Kyat","MNT - Mongolian Tögrög",
+      "MOP - Macanese Pataca","MRU - Mauritanian Ouguiya","MUR - Mauritian Rupee",
+      "MVR - Maldivian Rufiyaa","MWK - Malawian Kwacha","MXN - Mexican Peso","MYR - Malaysian Ringgit",
+      "MZN - Mozambican Metical","NAD - Namibian Dollar","NGN - Nigerian Naira","NIO - Nicaraguan Córdoba",
+      "NOK - Norwegian Krone","NPR - Nepalese Rupee","NZD - New Zealand Dollar","OMR - Omani Rial",
+      "PAB - Panamanian Balboa","PEN - Peruvian Sol","PGK - Papua New Guinean Kina",
+      "PHP - Philippine Peso","PKR - Pakistani Rupee","PLN - Polish Złoty","PYG - Paraguayan Guaraní",
+      "QAR - Qatari Riyal","RON - Romanian Leu","RSD - Serbian Dinar","RUB - Russian Ruble",
+      "RWF - Rwandan Franc","SAR - Saudi Riyal","SBD - Solomon Islands Dollar","SCR - Seychellois Rupee",
+      "SDG - Sudanese Pound","SEK - Swedish Krona","SGD - Singapore Dollar","SHP - Saint Helena Pound",
+      "SLL - Sierra Leonean Leone","SOS - Somali Shilling","SRD - Surinamese Dollar",
+      "SSP - South Sudanese Pound","STN - São Tomé and Príncipe Dobra","SYP - Syrian Pound",
+      "SZL - Eswatini Lilangeni","THB - Thai Baht","TJS - Tajikistani Somoni","TMT - Turkmenistani Manat",
+      "TND - Tunisian Dinar","TOP - Tongan Paʻanga","TRY - Turkish Lira","TTD - Trinidad and Tobago Dollar",
+      "TWD - New Taiwan Dollar","TZS - Tanzanian Shilling","UAH - Ukrainian Hryvnia",
+      "UGX - Ugandan Shilling","USD - US Dollar","UYU - Uruguayan Peso","UZS - Uzbekistani So'm",
+      "VES - Venezuelan Bolívar","VND - Vietnamese Đồng","VUV - Vanuatu Vatu","WST - Samoan Tala",
+      "XAF - Central African CFA Franc","XCD - East Caribbean Dollar","XOF - West African CFA Franc",
+      "YER - Yemeni Rial","ZAR - South African Rand","ZMW - Zambian Kwacha","ZWL - Zimbabwean Dollar"
+    ];
 
-                <hr style="margin-top: 20px; border: 0; border-top: 1px solid #e5e7eb;" />
+    function populateCountrySelect(sel) {
+      if (!sel || sel.dataset.populated === "1") return;
+      COUNTRIES.forEach(name => {
+        const opt = document.createElement("option");
+        opt.value = name;
+        opt.textContent = name;
+        sel.appendChild(opt);
+      });
+      sel.dataset.populated = "1";
+    }
 
-                <h3>How We Calculate the Score</h3>
-                <p>
-                    Your Visa Probability Score is calculated based on five main factors, each representing a step in the application process. Completing each step increases your score and unlocks a higher-value travel voucher.
-                </p>
-                <p class="hint">**Disclaimer:** This is an estimated score and not a guarantee of visa approval.</p>
-            </section>
-        </main>
-    </div>
+    function populateCurrencySelect(sel) {
+      if (!sel || sel.dataset.populated === "1") return;
+      CURRENCIES.forEach(label => {
+        const opt = document.createElement("option");
+        opt.value = label;
+        opt.textContent = label;
+        sel.appendChild(opt);
+      });
+      sel.dataset.populated = "1";
+    }
 
-    <script>
-        // --- User currency detection (simple heuristic) ---
-        const voucherCurrency = (() => {
-            try {
-                const lang = (navigator.language || "").toLowerCase();
-                const tz = (Intl.DateTimeFormat().resolvedOptions().timeZone || "").toLowerCase();
-                if (lang.includes("in") || tz.includes("kolkata")) {
-                    return { symbol: "₹", code: "INR", locale: "en-IN" };
-                }
-                if (lang.includes("ae") || tz.includes("dubai") || tz.includes("abudhabi") || tz.includes("abu_dhabi")) {
-                    return { symbol: "AED ", code: "AED", locale: "en-AE" };
-                }
-            } catch (e) {}
-            return { symbol: "$", code: "USD", locale: "en-US" };
-        })();
+    function handleMonthYearInput(e) {
+      let v = e.target.value.replace(/[^\d]/g, "");
+      if (v.length > 4) v = v.slice(0, 4);
+      if (v.length >= 3) {
+        v = v.slice(0, 2) + "/" + v.slice(2);
+      }
+      e.target.value = v;
+    }
 
-        // --- Country & currency lists ---
-        const COUNTRIES = [
-            "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda", "Argentina", "Armenia",
-            "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium",
-            "Belize", "Benin", "Bhutan", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria",
-            "Burkina Faso", "Burundi", "Cambodia", "Cameroon", "Canada", "Cape Verde", "Central African Republic", "Chad",
-            "Chile", "China", "Colombia", "Comoros", "Congo (Democratic Republic)", "Congo (Republic)", "Costa Rica",
-            "Croatia", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic",
-            "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Eswatini", "Ethiopia",
-            "Fiji", "Finland", "France", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Grenada", "Guatemala",
-            "Guinea", "Guinea-Bissau", "Guyana", "Haiti", "Honduras", "Hungary", "Iceland", "India", "Indonesia", "Iran",
-            "Iraq", "Ireland", "Israel", "Italy", "Ivory Coast", "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya",
-            "Kiribati", "Kuwait", "Kyrgyzstan", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein",
-            "Lithuania", "Luxembourg", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Mauritania",
-            "Mauritius", "Mexico", "Moldova", "Monaco", "Mongolia", "Montenegro", "Morocco", "Mozambique", "Myanmar",
-            "Namibia", "Nauru", "Nepal", "Netherlands", "New Zealand", "Nicaragua", "Niger", "Nigeria", "North Macedonia",
-            "Norway", "Oman", "Pakistan", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland",
-            "Portugal", "Qatar", "Romania", "Russia", "Rwanda", "Saint Kitts and Nevis", "Saint Lucia",
-            "Saint Vincent and the Grenadines", "Samoa", "San Marino", "Sao Tome and Principe", "Saudi Arabia",
-            "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands",
-            "Somalia", "South Africa", "South Korea", "South Sudan", "Spain", "Sri Lanka", "Sudan", "Suriname", "Sweden",
-            "Switzerland", "Syria", "Taiwan", "Tajikistan", "Tanzania", "Thailand", "Timor-Leste", "Togo", "Tonga",
-            "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan", "Tuvalu", "Uganda", "Ukraine",
-            "United Arab Emirates", "United Kingdom", "United States", "Uruguay", "Uzbekistan", "Vanuatu", "Vatican City",
-            "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe"
-        ];
+    function attachMonthYearFormatter(input) {
+      input.addEventListener("input", handleMonthYearInput);
+    }
 
-        const CURRENCIES = [
-            "AED - UAE Dirham", "AFN - Afghan Afghani", "ALL - Albanian Lek", "AMD - Armenian Dram",
-            "ANG - Netherlands Antillean Guilder", "AOA - Angolan Kwanza", "ARS - Argentine Peso",
-            "AUD - Australian Dollar", "AWG - Aruban Florin", "AZN - Azerbaijani Manat",
-            "BAM - Bosnia and Herzegovina Convertible Mark", "BBD - Barbadian Dollar", "BDT - Bangladeshi Taka",
-            "BGN - Bulgarian Lev", "BHD - Bahraini Dinar", "BIF - Burundian Franc", "BMD - Bermudian Dollar",
-            "BND - Brunei Dollar", "BOB - Bolivian Boliviano", "BRL - Brazilian Real", "BSD - Bahamian Dollar",
-            "BTN - Bhutanese Ngultrum", "BWP - Botswana Pula", "BYN - Belarusian Ruble", "BZD - Belize Dollar",
-            "CAD - Canadian Dollar", "CDF - Congolese Franc", "CHF - Swiss Franc", "CLP - Chilean Peso",
-            "CNY - Chinese Yuan", "COP - Colombian Peso", "CRC - Costa Rican Colón", "CUP - Cuban Peso",
-            "CVE - Cape Verdean Escudo", "CZK - Czech Koruna", "DJF - Djiboutian Franc", "DKK - Danish Krone",
-            "DOP - Dominican Peso", "DZD - Algerian Dinar", "EGP - Egyptian Pound", "ERN - Eritrean Nakfa",
-            "ETB - Ethiopian Birr", "EUR - Euro", "FJD - Fijian Dollar", "FKP - Falkland Islands Pound",
-            "GBP - British Pound", "GEL - Georgian Lari", "GHS - Ghanaian Cedi", "GIP - Gibraltar Pound",
-            "GMD - Gambian Dalasi", "GNF - Guinean Franc", "GTQ - Guatemalan Quetzal", "GYD - Guyanese Dollar",
-            "HKD - Hong Kong Dollar", "HNL - Honduran Lempira", "HRK - Croatian Kuna", "HTG - Haitian Gourde",
-            "HUF - Hungarian Forint", "IDR - Indonesian Rupiah", "ILS - Israeli New Shekel",
-            "INR - Indian Rupee", "IQD - Iraqi Dinar", "IRR - Iranian Rial", "ISK - Icelandic Króna",
-            "JMD - Jamaican Dollar", "JOD - Jordanian Dinar", "JPY - Japanese Yen", "KES - Kenyan Shilling",
-            "KGS - Kyrgyzstani Som", "KHR - Cambodian Riel", "KMF - Comorian Franc", "KRW - South Korean Won",
-            "KWD - Kuwaiti Dinar", "KYD - Cayman Islands Dollar", "KZT - Kazakhstani Tenge",
-            "LAK - Lao Kip", "LBP - Lebanese Pound", "LKR - Sri Lankan Rupee", "LRD - Liberian Dollar",
-            "LSL - Lesotho Loti", "LYD - Libyan Dinar", "MAD - Moroccan Dirham", "MDL - Moldovan Leu",
-            "MGA - Malagasy Ariary", "MKD - Macedonian Denar", "MMK - Burmese Kyat", "MNT - Mongolian Tögrög",
-            "MOP - Macanese Pataca", "MRU - Mauritanian Ouguiya", "MUR - Mauritian Rupee",
-            "MVR - Maldivian Rufiyaa", "MWK - Malawian Kwacha", "MXN - Mexican Peso", "MYR - Malaysian Ringgit",
-            "MZN - Mozambican Metical", "NAD - Namibian Dollar", "NGN - Nigerian Naira", "NIO - Nicaraguan Córdoba",
-            "NOK - Norwegian Krone", "NPR - Nepalese Rupee", "NZD - New Zealand Dollar", "OMR - Omani Rial",
-            "PAB - Panamanian Balboa", "PEN - Peruvian Sol", "PGK - Papua New Guinean Kina",
-            "PHP - Philippine Peso", "PKR - Pakistani Rupee", "PLN - Polish Złoty", "PYG - Paraguayan Guaraní",
-            "QAR - Qatari Riyal", "RON - Romanian Leu", "RSD - Serbian Dinar", "RUB - Russian Ruble",
-            "RWF - Rwandan Franc", "SAR - Saudi Riyal", "SBD - Solomon Islands Dollar", "SCR - Seychellois Rupee",
-            "SDG - Sudanese Pound", "SEK - Swedish Krona", "SGD - Singapore Dollar", "SHP - Saint Helena Pound",
-            "SLL - Sierra Leonean Leone", "SOS - Somali Shilling", "SRD - Surinamese Dollar",
-            "SSP - South Sudanese Pound", "STN - São Tomé and Príncipe Dobra", "SYP - Syrian Pound",
-            "SZL - Eswatini Lilangeni", "THB - Thai Baht", "TJS - Tajikistani Somoni", "TMT - Turkmenistani Manat",
-            "TND - Tunisian Dinar", "TOP - Tongan Paʻanga", "TRY - Turkish Lira", "TTD - Trinidad and Tobago Dollar",
-            "TWD - New Taiwan Dollar", "TZS - Tanzanian Shilling", "UAH - Ukrainian Hryvnia",
-            "UGX - Ugandan Shilling", "USD - US Dollar", "UYU - Uruguayan Peso", "UZS - Uzbekistani So'm",
-            "VES - Venezuelan Bolívar", "VND - Vietnamese Đồng", "VUV - Vanuatu Vatu", "WST - Samoan Tala",
-            "XAF - Central African CFA Franc", "XCD - East Caribbean Dollar", "XOF - West African CFA Franc",
-            "YER - Yemeni Rial", "ZAR - South African Rand", "ZMW - Zambian Kwacha", "ZWL - Zimbabwean Dollar"
-        ];
+    function parseMonthYear(str) {
+      const m = /^(\d{2})\/(\d{2})$/.exec(str.trim());
+      if (!m) return null;
+      const month = parseInt(m[1], 10);
+      const yy = parseInt(m[2], 10);
+      if (month < 1 || month > 12) return null;
+      const year = 2000 + yy;
+      return { year, month };
+    }
 
-        function populateCountrySelect(sel) {
-            if (!sel || sel.dataset.populated === "1") return;
-            COUNTRIES.forEach(name => {
-                const opt = document.createElement("option");
-                opt.value = name;
-                opt.textContent = name;
-                sel.appendChild(opt);
-            });
-            sel.dataset.populated = "1";
+    function compareMonthYear(a, b) {
+      if (a.year !== b.year) return a.year - b.year;
+      return a.month - b.month;
+    }
+
+    // Trip dates: must be future or current, and start < end (strict)
+    function validateTripDates() {
+      const startInput = document.getElementById("travelStart");
+      const endInput = document.getElementById("travelEnd");
+      const errorDiv = document.getElementById("tripDateError");
+
+      const start = parseMonthYear(startInput.value);
+      const end = parseMonthYear(endInput.value);
+
+      const now = new Date();
+      const nowObj = { year: now.getFullYear(), month: now.getMonth() + 1 };
+
+      let isValid = true;
+      let errorMessage = "";
+
+      startInput.classList.remove("input-error");
+      endInput.classList.remove("input-error");
+      errorDiv.style.display = "none";
+      errorDiv.textContent = "";
+
+      if (!start || !end) {
+        isValid = false;
+        errorMessage = "Please enter both start and end dates in MM/YY format.";
+      } else {
+        // start must be strictly before end
+        if (compareMonthYear(start, end) >= 0) {
+          isValid = false;
+          errorMessage = "Trip end date must be later than the start date.";
+        } else if (compareMonthYear(start, nowObj) < 0 || compareMonthYear(end, nowObj) < 0) {
+          isValid = false;
+          errorMessage = "Trip dates must be in the current or future month/year.";
+        }
+      }
+
+      if (!isValid) {
+        errorDiv.textContent = errorMessage;
+        errorDiv.style.display = "block";
+        startInput.classList.add("input-error");
+        endInput.classList.add("input-error");
+      }
+
+      return isValid;
+    }
+
+    // Travel history: must be past (<= current month) and start < end (strict)
+    function validateTravelDates() {
+      const travelRows = Array.from(document.querySelectorAll("#travel-body tr"));
+      const errorDiv = document.getElementById("travelDateError");
+
+      let hasError = false;
+      let errorMessage = "";
+
+      errorDiv.style.display = "none";
+      errorDiv.textContent = "";
+
+      const now = new Date();
+      const nowObj = { year: now.getFullYear(), month: now.getMonth() + 1 };
+
+      travelRows.forEach(row => {
+        const startInput = row.querySelector(".travel-start");
+        const endInput = row.querySelector(".travel-end");
+        const start = parseMonthYear(startInput.value);
+        const end = parseMonthYear(endInput.value);
+
+        startInput.classList.remove("input-error");
+        endInput.classList.remove("input-error");
+
+        if (start && end) {
+          // strict start < end
+          if (compareMonthYear(start, end) >= 0) {
+            hasError = true;
+            errorMessage = "For each previous trip, end date must be later than the start date.";
+            startInput.classList.add("input-error");
+            endInput.classList.add("input-error");
+          } else if (compareMonthYear(start, nowObj) > 0 || compareMonthYear(end, nowObj) > 0) {
+            hasError = true;
+            errorMessage = "Travel history dates must not be in the future.";
+            startInput.classList.add("input-error");
+            endInput.classList.add("input-error");
+          }
+        }
+      });
+
+      if (hasError) {
+        errorDiv.textContent = errorMessage;
+        errorDiv.style.display = "block";
+      }
+
+      return !hasError;
+    }
+
+    // Scoring steps
+    const steps = [
+      {
+        id: "start",
+        label: "Trip details",
+        success: 0,
+        voucher: 0,
+        check: () => {
+          const dest = document.querySelector("#destinationCountry");
+          const purpose = document.querySelector("#travelPurpose");
+          const length = document.querySelector("#lengthOfStay");
+          const tripDatesOk = validateTripDates();
+          return (
+            dest &&
+            purpose &&
+            length &&
+            dest.value.trim() !== "" &&
+            purpose.value.trim() !== "" &&
+            length.value.trim() !== "" &&
+            tripDatesOk
+          );
+        }
+      },
+      {
+        id: "personal",
+        label: "Personal details",
+        success: 20,
+        voucher: 10,
+        check: () => {
+          const name = document.querySelector("#fullName");
+          const age = document.querySelector("#age");
+          const nat = document.querySelector("#nationality");
+          const marital = document.querySelector("#maritalStatus");
+          const passportFile = document.querySelector("#passportDocs");
+          return (
+            [name, age, nat, marital].every(el => el && el.value.trim() !== "") &&
+            passportFile &&
+            passportFile.files.length > 0
+          );
+        }
+      },
+      {
+        id: "occupation",
+        label: "Occupation & financial",
+        success: 40,
+        voucher: 50,
+        check: () => {
+          const status = document.querySelector("#occupationStatus");
+          const type = document.querySelector("#employmentType");
+          const income = document.querySelector("#annualIncome");
+          const currency = document.querySelector("#incomeCurrency");
+          return [status, type, income, currency].every(el => el && el.value.trim() !== "");
+        }
+      },
+      {
+        id: "travel",
+        label: "Travel history",
+        success: 65,
+        voucher: 150,
+        check: () => {
+          const travelRows = Array.from(document.querySelectorAll("#travel-body tr"));
+          const travelDocs = document.querySelector("#travelDocs");
+
+          if (travelRows.length === 0) return false;
+
+          const allRowsComplete = travelRows.every(row => {
+            const country = row.querySelector(".travel-country").value;
+            const start = row.querySelector(".travel-start").value;
+            const end = row.querySelector(".travel-end").value;
+            return country.trim() !== "" && parseMonthYear(start) !== null && parseMonthYear(end) !== null;
+          });
+
+          return allRowsComplete && validateTravelDates() && travelDocs && travelDocs.files.length > 0;
+        }
+      },
+      {
+        id: "visa",
+        label: "Visa results",
+        success: 90,
+        voucher: 300,
+        check: () => {
+          const outcomeFile = document.querySelector("#visaOutcomeFile");
+          const visaYes = document.querySelector("#visaResultYes");
+          const visaNo = document.querySelector("#visaResultNo");
+          const resultSelected = (visaYes && visaYes.checked) || (visaNo && visaNo.checked);
+          return resultSelected && outcomeFile && outcomeFile.files.length > 0;
+        }
+      }
+    ];
+
+    function recomputeScore() {
+      let maxSuccessScore = 0;
+      let maxVoucherValue = 0;
+      let activeStep = steps[0];
+      let recommendations = ["Start by filling in your trip details (destination, dates, purpose)."];
+
+      for (let i = 0; i < steps.length; i++) {
+        const step = steps[i];
+        const isComplete = step.check();
+        const segment = document.getElementById(`step-${step.id}`);
+
+        if (segment) {
+          segment.classList.toggle("active", isComplete);
         }
 
-        function populateCurrencySelect(sel) {
-            if (!sel || sel.dataset.populated === "1") return;
-            CURRENCIES.forEach(label => {
-                const opt = document.createElement("option");
-                opt.value = label;
-                opt.textContent = label;
-                sel.appendChild(opt);
-            });
-            sel.dataset.populated = "1";
+        if (isComplete) {
+          maxSuccessScore = step.success;
+          maxVoucherValue = step.voucher;
+          activeStep = step;
+        } else {
+          if (i > 0) {
+            recommendations = [`Complete the ${step.label} section to increase your score and voucher value.`];
+          }
+          if (step.id === "personal") {
+            recommendations.push("Upload clear copies of your passport bio pages and existing visa stamps.");
+          }
+          if (step.id === "occupation") {
+            recommendations.push("Provide your annual income and confirm your employment status.");
+          }
+          if (step.id === "travel") {
+            recommendations.push(
+              "Ensure you have added at least one complete travel history entry and uploaded supporting documents."
+            );
+          }
+          if (step.id === "visa") {
+            recommendations.push("After your trip, select the visa result and upload the outcome letter.");
+          }
+          break;
         }
+      }
 
-        // --- Month/Year formatter (MM/YY) ---
-        function handleMonthYearInput(e) {
-            let v = e.target.value.replace(/[^\d]/g, "");
-            if (v.length > 4) v = v.slice(0, 4);
-            if (v.length >= 3) {
-                v = v.slice(0, 2) + "/" + v.slice(2);
-            }
-            e.target.value = v;
-        }
+      const scoreValueEl = document.getElementById("score-value");
+      const scoreValueBigEl = document.getElementById("score-value-big");
+      const voucherValueEl = document.getElementById("voucher-value");
+      const stageLabelEl = document.getElementById("stage-label");
+      const generateVoucherBtn = document.getElementById("generate-voucher-btn");
+      const voucherHelpEl = document.getElementById("voucher-help");
+      const recommendationsListEl = document.getElementById("recommendations-list");
 
-        function attachMonthYearFormatter(input) {
-            input.addEventListener("input", handleMonthYearInput);
-        }
+      scoreValueEl.textContent = `${maxSuccessScore}%`;
+      scoreValueBigEl.textContent = `${maxSuccessScore}%`;
 
-        /** Parses MM/YY string to { year: YYYY, month: 1-12 } */
-        function parseMonthYear(str) {
-            const m = /^(\d{2})\/(\d{2})$/.exec(str.trim());
-            if (!m) return null;
-            let month = parseInt(m[1], 10);
-            let yy = parseInt(m[2], 10);
-            if (month < 1 || month > 12) return null;
-            // Convert 2-digit year to 4-digit (assuming 2000s)
-            const year = 2000 + yy;
-            return { year, month };
-        }
+      voucherValueEl.textContent = voucherCurrency.symbol + maxVoucherValue;
 
-        /** Compares two { year, month } objects */
-        function compareMonthYear(a, b) {
-            if (a.year !== b.year) return a.year - b.year;
-            return a.month - b.month;
-        }
+      stageLabelEl.textContent = `Current stage: ${activeStep.label}`;
 
-        // --- Validation and Scoring Logic ---
+      generateVoucherBtn.disabled = maxVoucherValue === 0;
+      if (maxVoucherValue > 0) {
+        voucherHelpEl.textContent = `You have unlocked a voucher worth ${voucherCurrency.symbol}${maxVoucherValue}!`;
+      } else {
+        voucherHelpEl.textContent = "Fill your personal details to unlock your first voucher.";
+      }
 
-        function validateFutureTripDates() {
-            const startInput = document.getElementById("travelStart");
-            const endInput = document.getElementById("travelEnd");
-            const errorDiv = document.getElementById("tripDateError");
-            
-            const start = parseMonthYear(startInput.value);
-            const end = parseMonthYear(endInput.value);
-            
-            const now = new Date();
-            const currentYear = now.getFullYear();
-            const currentMonth = now.getMonth() + 1; // 1-based month
+      recommendationsListEl.innerHTML = recommendations.map(rec => `<li>${rec}</li>`).join("");
+    }
 
-            const nowObj = { year: currentYear, month: currentMonth };
+    function createTravelRow(isFirstRow) {
+      const tr = document.createElement("tr");
 
-            let isValid = true;
-            let errorMessage = "";
+      const tdCountry = document.createElement("td");
+      const tdStart = document.createElement("td");
+      const tdEnd = document.createElement("td");
+      const tdRemove = document.createElement("td");
 
-            if (start && end) {
-                if (compareMonthYear(start, end) > 0) {
-                    isValid = false;
-                    errorMessage = "Travel end date must be after or equal to the start date.";
-                } else if (compareMonthYear(start, nowObj) < 0 || compareMonthYear(end, nowObj) < 0) {
-                    // Check if either date is in the past
-                    isValid = false;
-                    errorMessage = "Trip dates must be in the current or future month/year.";
-                }
-            } else if (startInput.value.trim() !== "" || endInput.value.trim() !== "") {
-                isValid = false;
-                errorMessage = "Please enter both dates in MM/YY format.";
-            }
+      const countrySelect = document.createElement("select");
+      countrySelect.className = "country-select travel-country";
+      const placeholderOpt = document.createElement("option");
+      placeholderOpt.value = "";
+      placeholderOpt.textContent = "Select country";
+      countrySelect.appendChild(placeholderOpt);
+      populateCountrySelect(countrySelect);
 
-            if (!isValid) {
-                errorDiv.textContent = errorMessage;
-                errorDiv.style.display = "block";
-                startInput.classList.add("input-error");
-                endInput.classList.add("input-error");
-            } else {
-                errorDiv.style.display = "none";
-                startInput.classList.remove("input-error");
-                endInput.classList.remove("input-error");
-            }
-            return isValid;
-        }
+      const startInput = document.createElement("input");
+      startInput.type = "text";
+      startInput.placeholder = "MM/YY";
+      startInput.className = "mm-yy travel-start";
 
-        function validateTravelDates() {
-            const travelRows = Array.from(document.querySelectorAll("#travel-body tr"));
-            const errorDiv = document.getElementById("travelDateError");
-            
-            let hasError = false;
-            let errorMessage = "";
+      const endInput = document.createElement("input");
+      endInput.type = "text";
+      endInput.placeholder = "MM/YY";
+      endInput.className = "mm-yy travel-end";
 
-            travelRows.forEach(row => {
-                const startInput = row.querySelector(".travel-start");
-                const endInput = row.querySelector(".travel-end");
-                const start = parseMonthYear(startInput.value);
-                const end = parseMonthYear(endInput.value);
+      attachMonthYearFormatter(startInput);
+      attachMonthYearFormatter(endInput);
 
-                // Clear previous errors
-                startInput.classList.remove("input-error");
-                endInput.classList.remove("input-error");
+      [countrySelect, startInput, endInput].forEach(el => {
+        el.addEventListener("input", () => {
+          validateTravelDates();
+          recomputeScore();
+        });
+      });
 
-                if (start && end) {
-                    if (compareMonthYear(start, end) > 0) {
-                        hasError = true;
-                        errorMessage = "Travel end date must be after or equal to the start date for all trips.";
-                        startInput.classList.add("input-error");
-                        endInput.classList.add("input-error");
-                    }
-                }
-            });
+      tdCountry.appendChild(countrySelect);
+      tdStart.appendChild(startInput);
+      tdEnd.appendChild(endInput);
 
-            if (hasError) {
-                errorDiv.textContent = errorMessage;
-                errorDiv.style.display = "block";
-            } else {
-                errorDiv.style.display = "none";
-            }
-            return !hasError;
-        }
+      if (!isFirstRow) {
+        const removeBtn = document.createElement("button");
+        removeBtn.type = "button";
+        removeBtn.textContent = "Remove";
+        removeBtn.className = "btn-remove-row";
+        removeBtn.addEventListener("click", () => {
+          tr.remove();
+          validateTravelDates();
+          recomputeScore();
+        });
+        tdRemove.appendChild(removeBtn);
+      }
 
-        // --- Scoring configuration ---
-        const steps = [
-            { id: "start", label: "Trip details", displayLabel: "Start", success: 0, voucher: 0, 
-                check: () => {
-                    const dest = document.querySelector("#destinationCountry");
-                    const purpose = document.querySelector("#travelPurpose");
-                    const length = document.querySelector("#lengthOfStay");
-                    
-                    return [dest, purpose, length].every(el => el && el.value.trim() !== "") && 
-                           validateFutureTripDates();
-                }
-            },
-            {
-                id: "personal",
-                label: "Personal details",
-                displayLabel: "Personal details (Tier 1 voucher)",
-                success: 20,
-                voucher: 10,
-                check: () => {
-                    const name = document.querySelector("#fullName");
-                    const age = document.querySelector("#age");
-                    const nat = document.querySelector("#nationality");
-                    const marital = document.querySelector("#maritalStatus");
-                    const passportFile = document.querySelector("#passportDocs");
+      tr.appendChild(tdCountry);
+      tr.appendChild(tdStart);
+      tr.appendChild(tdEnd);
+      tr.appendChild(tdRemove);
 
-                    return [name, age, nat, marital].every(el => el && el.value.trim() !== "") && 
-                           passportFile && passportFile.files.length > 0;
-                }
-            },
-            {
-                id: "occupation",
-                label: "Occupation & financial",
-                displayLabel: "Occupation & financial (Tier 2 voucher)",
-                success: 40,
-                voucher: 50,
-                check: () => {
-                    const status = document.querySelector("#occupationStatus");
-                    const type = document.querySelector("#employmentType");
-                    const income = document.querySelector("#annualIncome");
-                    const currency = document.querySelector("#incomeCurrency");
+      return tr;
+    }
 
-                    return [status, type, income, currency].every(el => el && el.value.trim() !== "");
-                }
-            },
-            {
-                id: "travel",
-                label: "Travel history",
-                displayLabel: "Travel history (Tier 3 voucher)",
-                success: 65,
-                voucher: 150,
-                check: () => {
-                    const travelRows = Array.from(document.querySelectorAll("#travel-body tr"));
-                    const travelDocs = document.querySelector("#travelDocs");
-                    
-                    if (travelRows.length === 0) return false;
+    function init() {
+      document.querySelectorAll(".country-select").forEach(populateCountrySelect);
+      document.querySelectorAll(".currency-select").forEach(populateCurrencySelect);
 
-                    const allRowsComplete = travelRows.every(row => {
-                        const country = row.querySelector(".travel-country").value;
-                        const start = row.querySelector(".travel-start").value;
-                        const end = row.querySelector(".travel-end").value;
-                        return country.trim() !== "" && parseMonthYear(start) !== null && parseMonthYear(end) !== null;
-                    });
+      document.querySelectorAll(".mm-yy").forEach(attachMonthYearFormatter);
 
-                    return allRowsComplete && validateTravelDates() && travelDocs && travelDocs.files.length > 0;
-                }
-            },
-            {
-                id: "visa",
-                label: "Visa results",
-                displayLabel: "Visa results (Tier 4 voucher)",
-                success: 90,
-                voucher: 300,
-                check: () => {
-                    const outcomeFile = document.querySelector("#visaOutcomeFile");
-                    const visaYes = document.querySelector("#visaResultYes");
-                    const visaNo = document.querySelector("#visaResultNo");
-                    
-                    const resultSelected = (visaYes && visaYes.checked) || (visaNo && visaNo.checked);
-                    // This section is typically filled *after* the trip, so we only need it for the max score
-                    // We'll require the file upload and a selection for full credit
-                    return resultSelected && outcomeFile && outcomeFile.files.length > 0;
-                }
-            }
-        ];
+      document.getElementById("travelStart").addEventListener("input", () => {
+        validateTripDates();
+        recomputeScore();
+      });
+      document.getElementById("travelEnd").addEventListener("input", () => {
+        validateTripDates();
+        recomputeScore();
+      });
 
+      document.getElementById("travel-body").appendChild(createTravelRow(true));
 
-        function recomputeScore() {
-            let maxSuccessScore = 0;
-            let maxVoucherValue = 0;
-            let activeStep = steps[0];
-            let recommendations = ["Start by filling in your trip details (destination, dates, purpose)."];
+      document.getElementById("add-travel-row").addEventListener("click", () => {
+        document.getElementById("travel-body").appendChild(createTravelRow(false));
+        recomputeScore();
+      });
 
-            
-            // Check completion of sections sequentially
-            for (let i = 0; i < steps.length; i++) {
-                const step = steps[i];
-                const isComplete = step.check();
-                const segment = document.getElementById(`step-${step.id}`);
-                
-                if (segment) {
-                    segment.classList.toggle("active", isComplete);
-                }
+      document.getElementById("passportDocs").addEventListener("change", recomputeScore);
+      document.getElementById("travelDocs").addEventListener("change", () => {
+        validateTravelDates();
+        recomputeScore();
+      });
+      document.getElementById("visaOutcomeFile").addEventListener("change", recomputeScore);
+      document.getElementById("visaResultYes").addEventListener("change", recomputeScore);
+      document.getElementById("visaResultNo").addEventListener("change", recomputeScore);
 
-                if (isComplete) {
-                    maxSuccessScore = step.success;
-                    maxVoucherValue = step.voucher;
-                    activeStep = step;
-                } else {
-                    // Stop at the first incomplete step
-                    if (i > 0) { // Only provide recommendations for incomplete steps past the first one
-                        recommendations = [`Complete the **${step.label}** section to increase your score and voucher value.`];
-                    }
-                    if (step.id === 'personal' && !step.check()) {
-                        recommendations.push('Upload clear copies of your **passport bio pages** and existing **visa stamps**.');
-                    }
-                    if (step.id === 'occupation' && !step.check()) {
-                        recommendations.push('Provide your **annual income** and confirm your **employment status**.');
-                    }
-                    if (step.id === 'travel' && !step.check()) {
-                        recommendations.push('Ensure you have added at least one **complete travel history entry** and **uploaded supporting documents**.');
-                    }
-                    if (step.id === 'visa' && !step.check()) {
-                        recommendations.push('After your trip, select the visa result and **upload the outcome letter** to finalize your score.');
-                    }
-                    break; 
-                }
-            }
-            
-            // Update UI
-            const scoreValueEl = document.getElementById("score-value");
-            const scoreValueBigEl = document.getElementById("score-value-big");
-            const voucherValueEl = document.getElementById("voucher-value");
-            const stageLabelEl = document.getElementById("stage-label");
-            const generateVoucherBtn = document.getElementById("generate-voucher-btn");
-            const voucherHelpEl = document.getElementById("voucher-help");
-            const recommendationsListEl = document.getElementById("recommendations-list");
-            
-            // Update score and bar
-            scoreValueEl.textContent = `${maxSuccessScore}%`;
-            scoreValueBigEl.textContent = `${maxSuccessScore}%`;
-            
-            // Update voucher value
-            voucherValueEl.textContent = voucherCurrency.symbol + maxVoucherValue;
+      const form = document.getElementById("visa-form");
+      form.addEventListener("input", e => {
+        if (e.target.type === "file") return;
+        recomputeScore();
+      });
+      form.addEventListener("change", e => {
+        if (e.target.type === "file") return;
+        recomputeScore();
+      });
 
-            // Update stage label
-            stageLabelEl.textContent = `Current stage: ${activeStep.label}`;
+      document.getElementById("generate-voucher-btn").addEventListener("click", () => {
+        const currentStep = [...steps].reverse().find(s => s.check()) || steps[0];
+        const amount = currentStep.voucher;
+        const code =
+          "VISA-" + currentStep.id.toUpperCase() + "-" + Math.random().toString(36).slice(2, 8).toUpperCase();
+        alert(
+          `Prototype voucher\n\nAmount: ${voucherCurrency.symbol}${amount} (${voucherCurrency.code})\nCode: ${code}\n\nIn the real product, this would be stored and validated server-side.`
+        );
+      });
 
-            // Update voucher button and help text
-            generateVoucherBtn.disabled = maxVoucherValue === 0;
-            if (maxVoucherValue > 0) {
-                voucherHelpEl.textContent = `You have unlocked a voucher worth ${voucherCurrency.symbol}${maxVoucherValue}!`;
-            } else {
-                voucherHelpEl.textContent = "Fill your personal details to unlock your first voucher.";
-            }
+      recomputeScore();
+    }
 
-            // Update recommendations
-            recommendationsListEl.innerHTML = recommendations.map(rec => `<li>${rec}</li>`).join('');
-        }
-
-        // --- Travel history dynamic rows ---
-        function createTravelRow(isFirstRow) {
-            const tr = document.createElement("tr");
-
-            const tdCountry = document.createElement("td");
-            const tdStart = document.createElement("td");
-            const tdEnd = document.createElement("td");
-            const tdRemove = document.createElement("td");
-
-            const countrySelect = document.createElement("select");
-            countrySelect.className = "country-select travel-country";
-            const placeholderOpt = document.createElement("option");
-            placeholderOpt.value = "";
-            placeholderOpt.textContent = "Select country";
-            countrySelect.appendChild(placeholderOpt);
-            populateCountrySelect(countrySelect);
-
-            const startInput = document.createElement("input");
-            startInput.type = "text";
-            startInput.placeholder = "MM/YY";
-            startInput.className = "mm-yy travel-start";
-
-            const endInput = document.createElement("input");
-            endInput.type = "text";
-            endInput.placeholder = "MM/YY";
-            endInput.className = "mm-yy travel-end";
-
-            attachMonthYearFormatter(startInput);
-            attachMonthYearFormatter(endInput);
-
-            // Attach event listeners that call recomputeScore
-            [countrySelect, startInput, endInput].forEach(el => {
-                el.addEventListener("input", recomputeScore);
-                el.addEventListener("change", recomputeScore); // For select elements
-            });
-
-            tdCountry.appendChild(countrySelect);
-            tdStart.appendChild(startInput);
-            tdEnd.appendChild(endInput);
-
-            if (!isFirstRow) {
-                const removeBtn = document.createElement("button");
-                removeBtn.type = "button";
-                removeBtn.textContent = "Remove";
-                removeBtn.className = "btn-remove-row";
-                removeBtn.addEventListener("click", () => {
-                    tr.remove();
-                    recomputeScore();
-                });
-                tdRemove.appendChild(removeBtn);
-            }
-
-            tr.appendChild(tdCountry);
-            tr.appendChild(tdStart);
-            tr.appendChild(tdEnd);
-            tr.appendChild(tdRemove);
-
-            return tr;
-        }
-
-        function init() {
-            // 1. Populate initial country and currency dropdowns
-            document.querySelectorAll(".country-select").forEach(populateCountrySelect);
-            document.querySelectorAll(".currency-select").forEach(populateCurrencySelect);
-
-            // 2. Attach MM/YY formatters
-            document.querySelectorAll(".mm-yy").forEach(attachMonthYearFormatter);
-            
-            // Attach validation/scoring to main trip dates
-            document.getElementById("travelStart").addEventListener("input", recomputeScore);
-            document.getElementById("travelEnd").addEventListener("input", recomputeScore);
-
-
-            // 3. Populate initial travel history row
-            document.getElementById("travel-body").appendChild(createTravelRow(true));
-
-            // 4. Attach event listeners to trigger score recomputation on input/change
-            const form = document.getElementById("visa-form");
-            if (form) {
-                // Listen for changes on all form elements that matter
-                form.addEventListener("change", recomputeScore);
-                form.addEventListener("input", recomputeScore);
-            }
-
-            // 5. Add travel row button functionality
-            document.getElementById("add-travel-row").addEventListener("click", () => {
-                document.getElementById("travel-body").appendChild(createTravelRow(false));
-                recomputeScore(); 
-            });
-
-            // 6. Initial score calculation
-            recomputeScore();
-        }
-
-        // Run initialization when the page is fully loaded
-        window.addEventListener('DOMContentLoaded', init);
-    </script>
+    window.addEventListener("DOMContentLoaded", init);
+  </script>
 </body>
 </html>
