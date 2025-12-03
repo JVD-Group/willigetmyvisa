@@ -383,7 +383,7 @@
     <header>
       <div class="header-top">
         <div class="logo">VisaPro <span>Checker</span></div>
-        <div class="pill">Current Visa: Schengen (France)</div>
+        
       </div>
       <nav class="top-nav">
         <a href="#" class="active">Probability Score</a>
@@ -447,9 +447,20 @@
             </div>
           </div>
           <div>
-            <label for="lengthOfStay">Length of Stay (Days)</label>
+            
             <input type="number" id="lengthOfStay" min="1" max="180" placeholder="e.g., 7" />
-          </div>
+                      <label for="lengthOfStay">Length of stay</label>
+              <select id="lengthOfStay">
+                <option value="">Select length</option>
+                <option>Less than 2 weeks</option>
+                <option>2 weeks to 30 days</option>
+                <option>30 to 90 days</option>
+                <option>More than 90 days</option>
+              </select>  
+        
+        </div>
+
+          
           <p class="error-text" id="tripDateError" style="display: none;"></p>
 
           <h3>2. Personal Details</h3>
@@ -460,7 +471,7 @@
             </div>
             <div>
               <label for="age">Age</label>
-              <input type="number" id="age" min="18" max="99" placeholder="e.g., 30" />
+              <input type="number" id="age" min="1" max="99" placeholder="e.g., 30" />
             </div>
           </div>
           <div class="two-col">
