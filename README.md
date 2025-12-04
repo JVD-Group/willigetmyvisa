@@ -24,6 +24,8 @@ This repository hosts the proof-of-concept for a Visa Probability Checker. It in
 
 For a step-by-step UAT flow, see [docs/UAT.md](docs/UAT.md).
 
+For a no-code walkthrough on how to open, test, and merge pull requests in GitHub (without copy/pasting code), see [docs/PR_WORKFLOW.md](docs/PR_WORKFLOW.md).
+
 ### No-local-setup option (recommended if you're not a developer)
 
 If you just want to click a link and try the API without installing anything on your machine, use GitHub Codespaces (browser-based VS Code):
