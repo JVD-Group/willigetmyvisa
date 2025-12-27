@@ -2,3 +2,8 @@ __pycache__/
 *.pyc
 .venv/
 .env
+node_modules/
+*.log
+dist/
+ota-prototype/node_modules/
+ota-prototype/dist/
