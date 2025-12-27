@@ -2,3 +2,8 @@ __pycache__/
 *.pyc
 .venv/
 .env
+node_modules/
+*.log
+dist/
+JVD-Group/travelfreelife/node_modules/
+JVD-Group/travelfreelife/dist/
