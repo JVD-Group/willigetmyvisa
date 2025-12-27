@@ -1,0 +1,43 @@
+const flights = [
+  {
+    id: 'f1',
+    from: 'DXB',
+    to: 'LHR',
+    date: '2024-10-22',
+    airlines: ['Emirates'],
+    departTime: '09:15',
+    arriveTime: '14:05',
+    duration: '7h 50m',
+    stops: 'Nonstop',
+    price: 1680,
+    complexityLevel: 'low',
+  },
+  {
+    id: 'f2',
+    from: 'DXB',
+    to: 'LHR',
+    date: '2024-10-22',
+    airlines: ['Qatar Airways'],
+    departTime: '02:20',
+    arriveTime: '08:55',
+    duration: '9h 35m',
+    stops: '1 stop in DOH',
+    price: 1550,
+    complexityLevel: 'medium',
+  },
+  {
+    id: 'f3',
+    from: 'DXB',
+    to: 'LHR',
+    date: '2024-10-22',
+    airlines: ['Turkish Airlines'],
+    departTime: '04:10',
+    arriveTime: '11:15',
+    duration: '10h 05m',
+    stops: '1 stop in IST',
+    price: 1490,
+    complexityLevel: 'high',
+  },
+];
+
+export default flights;
