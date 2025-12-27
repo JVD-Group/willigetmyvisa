@@ -5,6 +5,10 @@ This repository hosts the proof-of-concept for a Visa Probability Checker. It in
 - A static prototype (`index.html`) to explore the data capture experience.
 - A Python FastAPI backend scaffold in `backend/` with SQLAlchemy models for users, visa applications, travel history, uploads, OCR results, and model registry tables.
 
+## Travelfreelife prototype (JVD Group)
+
+The mobile-first travel decision prototype now lives in `JVD-Group/travelfreelife/`. See that directory's README for setup and available routes.
+
 ## Quickstart (Backend)
 
 1. Create and activate a virtual environment (Python 3.11+ recommended).
