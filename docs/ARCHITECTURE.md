@@ -1,6 +1,6 @@
 # Architecture & Next Steps (AI-First, Cloud-Native)
 
-This document captures the direction for evolving the Visa Probability Checker into an AI-first, cloud-native platform with minimal technical debt as ownership transitions.
+This document captures the direction for evolving Travelstressfree into an AI-first, cloud-native platform with minimal technical debt as ownership transitions.
 
 ## Guiding Principles
 - **AI-first**: Design domain objects and data contracts to support continuous learning (feature logs, labels, model registry) from day one.

@@ -2,7 +2,7 @@ from pydantic import BaseSettings, Field
 
 
 class Settings(BaseSettings):
-    app_name: str = Field("Visa Probability Checker API", description="Application name")
+    app_name: str = Field("Travelstressfree API", description="Application name")
     api_prefix: str = Field("/api/v1", description="API prefix")
     database_url: str = Field(
         "sqlite:///./visa_probability.db",

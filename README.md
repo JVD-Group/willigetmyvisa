@@ -1,6 +1,6 @@
-# Visa Probability Checker (PoC)
+# Travelstressfree (PoC)
 
-This repository hosts the proof-of-concept for a Visa Probability Checker. It includes:
+This repository hosts the proof-of-concept for Travelstressfree. It includes:
 
 - A static prototype (`index.html`) to explore the data capture experience.
 - A Python FastAPI backend scaffold in `backend/` with SQLAlchemy models for users, visa applications, travel history, uploads, OCR results, and model registry tables.
