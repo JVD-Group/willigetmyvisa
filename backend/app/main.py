@@ -16,4 +16,4 @@ app.include_router(api_router, prefix=settings.api_prefix)
 
 @app.get("/", tags=["root"], summary="Root")
 def root():
-    return {"message": "Visa Probability Checker API", "docs_url": f"{settings.api_prefix}/docs"}
+    return {"message": "Travelstressfree API", "docs_url": f"{settings.api_prefix}/docs"}
